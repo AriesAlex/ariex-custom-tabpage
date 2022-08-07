@@ -66,7 +66,7 @@
 
     let success = false
     try {
-      const icons = (await timeout(getFavicons(url), 3000)).icons
+      const icons = (await timeout(getFavicons(url), 5000)).icons
       if (icons.length > 0) {
         const binary = (
           await axios.get(icons[0].src, { responseType: 'arraybuffer' })
