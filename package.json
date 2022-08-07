@@ -1,5 +1,5 @@
 {
-  "name": "custom-webpage",
+  "name": "ariex-custom-tabpage",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
@@ -10,7 +10,7 @@
     "start": "node ."
   },
   "keywords": [],
-  "author": "",
+  "author": "ArieX",
   "license": "ISC",
   "dependencies": {
     "array-move": "^4.0.0",
