@@ -83,8 +83,14 @@ export default {
         this.getIconTimer = null
 
         if (!this.link.url) return
+
+        const url = this.link.url.startsWith('http')
+          ? this.link.url
+          : 'https://' + this.link.url
+        const urlHostname = new URL(url).hostname
+
         this.$api
-          .get('https://icon.horse/icon/' + this.link.url, {
+          .get('https://icon.horse/icon/' + urlHostname, {
             responseType: 'arraybuffer',
           })
           .then(async ({ data }) => {
