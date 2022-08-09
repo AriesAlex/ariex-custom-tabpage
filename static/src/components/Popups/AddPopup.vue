@@ -35,6 +35,8 @@
 <script>
 const DEFAULT_ICON = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAAAXNSR0IArs4c6QAAAaBJREFUWEftlksuRUEQhr87YAeIR6yAFTDBiLEpQwMb8BgIMWAFxJRFMDHDCgzMxXMJEiG/dEurdN86N1e7kdwzOjmnT/1f/VV9ulr0+Gr1WJ8+QOrAILAPrACjlUrzCJwBO8CbNFKAQ2CjkrANK60tC/AAjAEzwE0lEMW+AuTEuAX4CKK1G/OHTir22wBLwElIag04D/d/BnAPTARR3U/+e4DhkMFrwwZdNCW46MaBIeASGADmgaeGELllHfeAMpf4VIh2CywAJSc8pzoCSMUlrEsgJYi4XutKkI0Bou3TwB0wB7wHN+KztBzpegHom1y5GgHYzNNscu8kGMvkOeUCjJhgOSu90ligNIYLoAza1Tl2ttecJRddgFg/1fzZ2W62T2zNc+91EH2fQ7mzwNtmlinNdB04NgusE3E7f2nnANQDTf92aTmWgaOCY7ZcbR2odRzbbVp0oBaAspYTL14P1ASQdnEXxJFsFrju4rBp92kcyaT1NSuk2R4Am5WEbVhpbVsAjeV7wGoYTmuwKPNTYDc3ltcQdGPWbrg+gOvAJ17NfyGYRfQdAAAAAElFTkSuQmCC`
 import PopupBase from '@/components/Popups/PopupBase'
+import { Buffer } from 'buffer'
+
 export default {
   components: { PopupBase },
   data() {
@@ -81,9 +83,13 @@ export default {
         this.getIconTimer = null
 
         if (!this.link.url) return
-        this.$api.post('api/getIcon', this.link).then(({ data }) => {
-          this.link.icon = data
-        })
+        this.$api
+          .get('https://icon.horse/icon/' + this.link.url, {
+            responseType: 'arraybuffer',
+          })
+          .then(async ({ data }) => {
+            this.link.icon = await this.resizeImage(data, 64, 64)
+          })
       }, 500)
     },
     upload() {
@@ -104,6 +110,24 @@ export default {
       reader.onerror = () => {
         this.link.icon = DEFAULT_ICON
       }
+    },
+    resizeImage(imgData, width, height) {
+      return new Promise(resolve => {
+        var img = new Image()
+        img.onload = function () {
+          var canvas = document.createElement('canvas'),
+            ctx = canvas.getContext('2d')
+
+          canvas.width = width
+          canvas.height = height
+
+          ctx.drawImage(this, 0, 0, width, height)
+          resolve(canvas.toDataURL())
+        }
+        img.src =
+          'data:image/png;base64,' +
+          Buffer.from(imgData, 'binary').toString('base64')
+      })
     },
   },
   watch: {

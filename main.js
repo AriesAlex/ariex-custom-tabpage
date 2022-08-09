@@ -1,10 +1,7 @@
 ;(async () => {
-  const getFavicons = require('get-website-favicon')
-  const { timeout } = require('promise-timeout')
   const { arrayMoveMutable } = await import('array-move')
   const { v4 } = require('uuid')
   const fs = require('fs-extra')
-  const axios = require('axios').default
   const express = require('express')
   const app = express()
 
@@ -57,29 +54,6 @@
 
     fs.writeJsonSync('links.json', links, { spaces: 2 })
     res.status(200).send('ok')
-  })
-
-  app.post('/api/getIcon', async (req, res) => {
-    let url = req.body.url
-    if (!url) return res.status(400).send('Укажите ссылку')
-    if (!url.startsWith('http')) url = 'https://' + url
-
-    let success = false
-    try {
-      const icons = (await timeout(getFavicons(url), 5000)).icons
-      if (icons.length > 0) {
-        const binary = (
-          await axios.get(icons[0].src, { responseType: 'arraybuffer' })
-        ).data
-        res
-          .status(200)
-          .send(
-            'data:image/png;base64,' + Buffer.from(binary).toString('base64')
-          )
-        success = true
-      }
-    } catch {}
-    if (!success) res.status(500).send('Не удалось получить иконку')
   })
 
   app.post('/api/delete', async (req, res) => {
