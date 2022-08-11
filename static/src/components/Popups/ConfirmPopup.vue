@@ -56,7 +56,7 @@ export default {
     justify-content: flex-end;
     margin-top: 15px;
 
-    *:nth-child(1) {
+    > *:nth-child(1) {
       margin-right: 5px;
     }
   }
