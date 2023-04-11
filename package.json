@@ -1,21 +1,21 @@
 {
   "name": "ariex-custom-tabpage",
   "version": "1.0.0",
-  "description": "",
-  "main": "main.js",
   "scripts": {
-    "init": "npm i && cd static && npm i && npm run build && cd ../ && npm run start",
-    "build-static": "cd static && npm run build",
-    "dev": "npx nodemon .",
-    "start": "node ."
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
   },
-  "keywords": [],
-  "author": "ArieX",
-  "license": "ISC",
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.1",
+    "@types/uuid": "^9.0.1",
+    "nuxt": "^3.3.3"
+  },
   "dependencies": {
     "array-move": "^4.0.0",
-    "express": "^4.17.3",
-    "fs-extra": "^10.0.1",
-    "uuid": "^8.3.2"
+    "fs-extra": "^11.1.1",
+    "uuid": "^9.0.0"
   }
 }
