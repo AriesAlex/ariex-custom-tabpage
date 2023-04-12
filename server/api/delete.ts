@@ -3,7 +3,7 @@ import storage from './lib/storage'
 export default defineEventHandler(async e => {
   const body = await readBody(e)
   const id = body?.id
-  if (!id)
+  if (id == null)
     throw createError({
       statusCode: 400,
       message: `Укажите id ссылки`,

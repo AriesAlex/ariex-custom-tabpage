@@ -1,42 +1,15 @@
-# Nuxt 3 Minimal Starter
+# ArieX Custom Tabpage
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+https://dtf.ru/flood/1300851-kastomnaya-novaya-vkladka-brauzera
 
-## Setup
+## Установка и запуск
 
-Make sure to install the dependencies:
-
-```bash
-# yarn
-yarn install
-
-# npm
-npm install
-
-# pnpm
-pnpm install
+```
+npm run init
 ```
 
-## Development Server
+## Запуск
 
-Start the development server on `http://localhost:3000`
-
-```bash
-npm run dev
 ```
-
-## Production
-
-Build the application for production:
-
-```bash
-npm run build
+npm run start
 ```
-
-Locally preview production build:
-
-```bash
-npm run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.

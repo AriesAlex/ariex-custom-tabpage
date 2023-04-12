@@ -6,12 +6,12 @@ export default defineEventHandler(async e => {
   const id = body?.id
   const offset = body?.offset
 
-  if (!id)
+  if (id == null)
     throw createError({
       statusCode: 400,
       message: `Укажите id ссылки`,
     })
-  if (!offset)
+  if (typeof offset != 'number')
     throw createError({
       statusCode: 400,
       message: `Укажите смещение`,
