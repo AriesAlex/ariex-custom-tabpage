@@ -15,12 +15,13 @@
         width: `${spacePerLinks}px`,
       }"
     >
-      <div
+      <a
         class="link"
         :class="{ active: currentLink && currentLink.id == link.id }"
         :style="{ width: linkWidth + 'px' }"
         v-for="link in [...links, addLink]"
         :key="link.url"
+        :href="link.url"
         @mouseup="click(link, $event)"
         @contextmenu.prevent="edit(link)"
       >
@@ -31,7 +32,7 @@
           v-else
         />
         <div class="title">{{ link.title }}</div>
-      </div>
+      </a>
     </div>
     <LinkToolbar :link="currentLink" @close="currentLink = null" />
   </div>
@@ -61,8 +62,10 @@ const root = ref<InstanceType<typeof HTMLElement> | null>(null)
 
 function click(link: Link, e: MouseEvent) {
   if (e.button == 2) return
-  if (link.url)
-    e.button == 1 ? window.open(link.url) : window.location.replace(link.url)
+  if (link.url && e.button == 0) {
+    window.location.replace(link.url)
+    e.preventDefault()
+  }
   if (link.meta == 'add') emit('add')
 }
 
@@ -114,6 +117,7 @@ watch(
     display: grid;
 
     > .link {
+      display: block;
       font-size: 15px;
       padding: 5px;
       cursor: pointer;
@@ -123,6 +127,8 @@ watch(
       text-align: center;
       transition: 0.2s all;
       border: solid 1px transparent;
+      text-decoration: none;
+      color: black;
 
       &:active {
         transform: scale(1.1);
