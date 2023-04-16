@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useConfirmPopupStore } from '~/stores/confirmPopup'
+import { useConfirmPopupStore } from '~/stores/popups/confirmPopup'
 
 const confirmPopupStore = useConfirmPopupStore()
 const { active, settings } = storeToRefs(confirmPopupStore)

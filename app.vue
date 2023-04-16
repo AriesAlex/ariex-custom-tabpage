@@ -24,6 +24,7 @@
 <script setup lang="ts">
 import LinksGrid from '@/components/LinksGrid.vue'
 import { useLinkStore } from '@/stores/link'
+import { useAddPopupStore } from '~/stores/popups/addPopup'
 const isFull = useIsFull()
 
 const MIN_GRID_HEIGHT = 140
@@ -32,6 +33,7 @@ const offset = ref(0)
 const initialOffset = ref(0)
 const lastDragPos = ref(0)
 
+const addPopupStore = useAddPopupStore()
 const linkStore = useLinkStore()
 linkStore.loadLinks()
 
@@ -67,8 +69,7 @@ function dragOffset({ touches }: TouchEvent) {
 }
 
 function openPopup() {
-  // TODO
-  // this.$events.emit('show-add')
+  addPopupStore.show()
 }
 </script>
 
@@ -123,5 +124,12 @@ body {
 input {
   -webkit-user-select: text !important;
   user-select: text !important;
+}
+
+.el-input__wrapper {
+  padding: 5px 15px;
+}
+.el-button {
+  padding: 20px 15px;
 }
 </style>

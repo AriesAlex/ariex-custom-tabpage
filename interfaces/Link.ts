@@ -1,5 +1,5 @@
 export default interface Link {
-  id?: string
+  id?: string | null
   title: string
   url?: string
   icon?: string

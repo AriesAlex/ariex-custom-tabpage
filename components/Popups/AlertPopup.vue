@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { useAlertPopupStore } from '~/stores/alertPopup'
+import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 
 const alertPopupStore = useAlertPopupStore()
 const { active, settings } = storeToRefs(alertPopupStore)

@@ -4,7 +4,7 @@ interface State {
   settings: Settings
 }
 interface Settings {
-  title: string
+  title?: string
   content: string
 }
 

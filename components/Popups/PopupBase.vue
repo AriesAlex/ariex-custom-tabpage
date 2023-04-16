@@ -1,5 +1,5 @@
 <template>
-  <div class="popup-base" :class="{ show }">
+  <div class="popup-base" :class="{ show }" v-if="serverShow">
     <div class="blackout" @click="close" />
 
     <div class="popup">
@@ -22,6 +22,9 @@ import { Close } from '@element-plus/icons-vue'
 const props = defineProps<{ show: boolean; title: string }>()
 const { show, title } = toRefs(props)
 const emit = defineEmits(['close'])
+
+const serverShow = ref(false)
+nextTick(() => (serverShow.value = true))
 
 const close = () => emit('close')
 </script>

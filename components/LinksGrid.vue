@@ -60,6 +60,7 @@ const addLink: Link = { title: 'Новая ссылка', meta: 'add' }
 const root = ref<InstanceType<typeof HTMLElement> | null>(null)
 
 function click(link: Link, e: MouseEvent) {
+  if (e.button == 2) return
   if (link.url)
     e.button == 1 ? window.open(link.url) : window.location.replace(link.url)
   if (link.meta == 'add') emit('add')
