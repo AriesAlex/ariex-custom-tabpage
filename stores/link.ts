@@ -10,7 +10,9 @@ export const useLinkStore = defineStore('link', {
   }),
   actions: {
     async loadLinks() {
-      this.links = (await useFetch<Link[]>('/api/get')).data.value || []
+      if (process.server)
+        this.links = (await useFetch<Link[]>('/api/get')).data.value || []
+      else this.links = (await $fetch<Link[]>('/api/get')) || []
     },
   },
 })

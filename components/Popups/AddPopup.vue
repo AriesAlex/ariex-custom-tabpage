@@ -43,7 +43,7 @@ import { storeToRefs } from 'pinia'
 import { useAddPopupStore, DEFAULT_ICON } from '~/stores/popups/addPopup'
 import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 import { useLinkStore } from '@/stores/link'
-import { ElInput } from 'element-plus'
+import { ElInput as ElInputComponent } from 'element-plus'
 
 const alertPopupStore = useAlertPopupStore()
 const addPopupStore = useAddPopupStore()
@@ -51,7 +51,7 @@ const linkStore = useLinkStore()
 const { active, settings } = storeToRefs(addPopupStore)
 const { hide } = addPopupStore
 
-const titleInputRef = ref<InstanceType<typeof ElInput> | null>(null)
+const titleInputRef = ref<InstanceType<typeof ElInputComponent> | null>(null)
 const fileRef = ref<InstanceType<typeof HTMLInputElement> | null>(null)
 
 function add() {
@@ -79,13 +79,13 @@ function fetchIcon() {
       : 'https://' + settings.value.link.url
     const urlHostname = new URL(url).hostname
 
-    const { data } = await $fetch<{ data: string }>(
+    const iconData = await $fetch<string>(
       'https://icon.horse/icon/' + urlHostname,
       {
         responseType: 'arrayBuffer',
       }
     )
-    settings.value.link.icon = await resizeImage(data, 64, 64)
+    settings.value.link.icon = await resizeImage(iconData, 64, 64)
   }, 500)
 }
 
