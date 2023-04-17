@@ -41,13 +41,7 @@ const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
 function resetOffset() {
   let gridHeight = 0
-
-  if (useCookie('lastGridHeight').value)
-    gridHeight = Number(useCookie('lastGridHeight').value)
-
   if (grid.value) gridHeight = grid.value.$el.getBoundingClientRect().height
-
-  useCookie('lastGridHeight').value = String(gridHeight)
 
   const initial = -gridHeight + MIN_GRID_HEIGHT
   offset.value = initialOffset.value = initial
@@ -66,7 +60,13 @@ function dragOffset({ touches }: TouchEvent) {
   offset.value += newOffset
   if (offset.value < initialOffset.value) offset.value = initialOffset.value
   if (offset.value > 0) offset.value = 0
+  useCookie('lastInitialOffset').value = String(initialOffset.value)
 }
+
+if (useCookie('lastInitialOffset').value)
+  offset.value = initialOffset.value = Number(
+    useCookie('lastInitialOffset').value
+  )
 
 function openPopup() {
   addPopupStore.show()

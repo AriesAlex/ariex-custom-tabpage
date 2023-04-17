@@ -22,7 +22,7 @@
         v-for="link in [...links, addLink]"
         :key="link.url"
         :href="link.url"
-        @mouseup="click(link, $event)"
+        @click="click(link, $event)"
         @contextmenu.prevent="edit(link)"
       >
         <ElIcon v-if="link.meta == 'add'"><Plus /></ElIcon>
@@ -62,7 +62,7 @@ const root = ref<InstanceType<typeof HTMLElement> | null>(null)
 
 function click(link: Link, e: MouseEvent) {
   if (e.button == 2) return
-  if (link.url && e.button == 0) {
+  if (link.url) {
     window.location.replace(link.url)
     e.preventDefault()
   }
