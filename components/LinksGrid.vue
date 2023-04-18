@@ -95,14 +95,12 @@ async function recalcuate() {
 
   emit('recalculate')
 }
-const debouncedTimeoutRecalculate = useDebounceFn(() => {
-  useTimeoutFn(recalcuate, 500)
-})
+const debouncedRecalculate = useDebounceFn(recalcuate)
 useWindowEvent(
   'resize',
   () => {
     recalcuate()
-    debouncedTimeoutRecalculate()
+    debouncedRecalculate()
   },
   true
 )
