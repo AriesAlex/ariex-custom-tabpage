@@ -19,6 +19,7 @@
 <script setup lang="ts">
 import LinksGrid from '@/components/LinksGrid.vue'
 import { useLinkStore } from '@/stores/link'
+import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 const isFull = useIsFull()
 
@@ -55,8 +56,18 @@ function dragOffset({ touches }: TouchEvent) {
   offset.value += newOffset
   if (offset.value < initialOffset.value) offset.value = initialOffset.value
   if (offset.value > 0) offset.value = 0
-  useCookie('lastInitialOffset').value = String(initialOffset.value)
 }
+
+watchDebounced(
+  initialOffset,
+  () => {
+    if (process.server) return
+    useCookie('lastInitialOffset', {
+      maxAge: Number.MAX_SAFE_INTEGER,
+    }).value = String(initialOffset.value)
+  },
+  { debounce: 500, maxWait: 1000 }
+)
 
 if (useCookie('lastInitialOffset').value)
   offset.value = initialOffset.value = Number(

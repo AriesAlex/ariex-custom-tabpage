@@ -36,6 +36,7 @@ import { useLinkStore } from '@/stores/link'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
+import { useDebounceFn, useThrottleFn } from '@vueuse/shared'
 
 const emit = defineEmits(['recalculate', 'add'])
 
@@ -66,16 +67,21 @@ function edit(link: Link) {
   currentLink.value = link
 }
 
-useWindowEvent('resize', recalcuate, true)
+function updateCookie(fullWidth: number) {
+  useCookie('lastFullWidth', {
+    maxAge: Number.MAX_SAFE_INTEGER,
+  }).value = String(fullWidth)
+}
+const updateCookieDebounced = useDebounceFn(updateCookie)
 async function recalcuate() {
   let fullWidth = 800
 
-  if (useCookie('lastFullWidth').value)
+  if (!root.value && useCookie('lastFullWidth').value)
     fullWidth = Number(useCookie('lastFullWidth').value)
 
   if (root.value) fullWidth = root.value.getBoundingClientRect().width
 
-  useCookie('lastFullWidth').value = String(fullWidth)
+  updateCookieDebounced(fullWidth)
 
   const linksCount = links.value.length + 1
   const spacePerLink = linkWidth.value + gap.value * 2
@@ -88,6 +94,7 @@ async function recalcuate() {
 
   emit('recalculate')
 }
+useWindowEvent('resize', recalcuate, true)
 recalcuate()
 watch(
   () => links.value.length,
