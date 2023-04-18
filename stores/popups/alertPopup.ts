@@ -29,7 +29,7 @@ export const useAlertPopupStore = defineStore('alertPopup', {
       this.active = false
     },
     resetSettings() {
-      this.settings = initialSettings
+      this.settings = structuredClone(initialSettings)
     },
   },
 })

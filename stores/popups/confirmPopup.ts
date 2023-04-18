@@ -45,7 +45,7 @@ export const useConfirmPopupStore = defineStore('confirmPopup', {
       this.active = false
     },
     resetSettings() {
-      this.settings = initialSettings
+      this.settings = structuredClone(initialSettings)
     },
   },
 })

@@ -38,7 +38,7 @@ export const useAddPopupStore = defineStore('addPopup', {
       this.active = false
     },
     resetSettings() {
-      this.settings = initialSettings
+      this.settings = structuredClone(initialSettings)
     },
   },
 })
