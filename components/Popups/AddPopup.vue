@@ -58,7 +58,9 @@ function add() {
   hide()
   $fetch('/api/add', { method: 'POST', body: settings.value.link })
     .catch(err => {
-      alertPopupStore.show({ content: err.response?.data ?? err.message })
+      alertPopupStore.show({
+        content: err.data.message,
+      })
     })
     .finally(() => linkStore.loadLinks())
 }

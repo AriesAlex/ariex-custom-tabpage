@@ -68,6 +68,7 @@ function edit(link: Link) {
 }
 
 function updateCookie(fullWidth: number) {
+  if (process.server) return
   useCookie('lastFullWidth', {
     maxAge: Number.MAX_SAFE_INTEGER,
   }).value = String(fullWidth)
