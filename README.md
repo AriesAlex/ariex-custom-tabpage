@@ -18,6 +18,6 @@ npm run start
 
 ## Ветки
 
-1.0.0 - первая ванильная vue 2.0 версия
+1.0.0 - первая ванильная vue 2.0 версия с Express сервером
 
 main - v1.5.0 версия на Nuxt 3 с TypeScript, Pinia и SSR
