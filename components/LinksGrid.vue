@@ -36,7 +36,7 @@ import { useLinkStore } from '@/stores/link'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
-import { useDebounceFn, useThrottleFn } from '@vueuse/shared'
+import { useDebounceFn, useThrottleFn, useTimeoutFn } from '@vueuse/shared'
 
 const emit = defineEmits(['recalculate', 'add'])
 
@@ -95,7 +95,17 @@ async function recalcuate() {
 
   emit('recalculate')
 }
-useWindowEvent('resize', recalcuate, true)
+const debouncedTimeoutRecalculate = useDebounceFn(() => {
+  useTimeoutFn(recalcuate, 500)
+})
+useWindowEvent(
+  'resize',
+  () => {
+    recalcuate()
+    debouncedTimeoutRecalculate()
+  },
+  true
+)
 recalcuate()
 watch(
   () => links.value.length,
