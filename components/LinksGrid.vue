@@ -1,12 +1,5 @@
 <template>
-  <div
-    id="links"
-    ref="root"
-    :style="{
-      alignItems: isFull ? 'center' : 'flex-end',
-      maxWidth: isFull ? '50%' : 'initial',
-    }"
-  >
+  <div id="links" ref="root">
     <div
       class="grid"
       ref="grid"
@@ -43,7 +36,6 @@ import { useLinkStore } from '@/stores/link'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
-const isFull = useIsFull()
 
 const emit = defineEmits(['recalculate', 'add'])
 
@@ -108,6 +100,13 @@ watch(
   width: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
+  max-width: 50%;
+
+  @media (max-width: 800px) {
+    align-items: flex-end;
+    max-width: initial;
+  }
 
   > .grid {
     box-shadow: 0 1px 11px 1px rgb(0 0 0 / 20%);

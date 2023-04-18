@@ -2,9 +2,7 @@
   <div id="link-toolbar">
     <div
       class="toolbar"
-      :style="`${isFull ? 'bottom' : 'top'}: 25px; pointer-events: ${
-        link ? 'initial' : 'none'
-      };`"
+      :style="{ pointerEvents: link ? 'initial' : 'none' }"
       :class="{ hide: !link }"
     >
       <div class="action" v-for="action in actions" :key="action.id">
@@ -32,7 +30,6 @@ import { useLinkStore } from '@/stores/link'
 import { useConfirmPopupStore } from '~/stores/popups/confirmPopup'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { ArrowLeft, Close, EditPen, ArrowRight } from '@element-plus/icons-vue'
-const isFull = useIsFull()
 const props = defineProps<{ link: Link | null }>()
 const { link } = toRefs(props)
 const emit = defineEmits(['close'])
@@ -139,6 +136,12 @@ const actions = [
     justify-content: center;
     align-items: center;
     transition: 0.25s all;
+    bottom: 25px;
+
+    @media (max-width: 800px) {
+      bottom: initial;
+      top: 25px;
+    }
 
     opacity: 1;
     transform: translateX(-50%) translateY(0);

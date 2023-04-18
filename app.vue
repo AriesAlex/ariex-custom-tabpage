@@ -1,10 +1,5 @@
 <template>
-  <div
-    id="app"
-    @touchstart="resetDragPos"
-    @touchmove="dragOffset"
-    :class="{ mobile: !isFull }"
-  >
+  <div id="app" @touchstart="resetDragPos" @touchmove="dragOffset">
     <AddPopup />
     <ConfirmPopup />
     <AlertPopup />
@@ -93,7 +88,7 @@ function openPopup() {
     height: 100vh;
   }
 
-  &.mobile {
+  @media (max-width: 800px) {
     > .grid {
       height: initial;
       position: fixed;
