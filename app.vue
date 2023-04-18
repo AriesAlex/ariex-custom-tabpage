@@ -40,7 +40,9 @@ function resetOffset() {
   if (grid.value) gridHeight = grid.value.$el.getBoundingClientRect().height
 
   const initial = -gridHeight + MIN_GRID_HEIGHT
-  offset.value = initialOffset.value = initial
+
+  if (initialOffset.value != initial)
+    offset.value = initialOffset.value = initial
 }
 resetOffset()
 
