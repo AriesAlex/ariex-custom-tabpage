@@ -1,11 +1,25 @@
 <template>
   <el-tab-pane v-if="settings" label="Фон" class="background-pane">
     <div class="reversable-pane" :class="{ mobile: !isFull }">
-      <el-card shadow="never" header="Десктопная версия">
+      <el-card shadow="never">
         <SettingsBackgroundConfigurator :mobile="false" />
+
+        <template v-slot:header>
+          <el-icon>
+            <Platform />
+          </el-icon>
+          <div>Десктопная версия</div>
+        </template>
       </el-card>
-      <el-card shadow="never" header="Мобильная версия">
+      <el-card shadow="never">
         <SettingsBackgroundConfigurator :mobile="true" />
+
+        <template v-slot:header>
+          <el-icon>
+            <Iphone />
+          </el-icon>
+          <div>Мобильная версия</div>
+        </template>
       </el-card>
     </div>
     <el-switch
@@ -18,6 +32,7 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '~/stores/settings'
+import { Iphone, Platform } from '@element-plus/icons-vue'
 
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
@@ -64,7 +79,7 @@ watch(
 )
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .background-pane {
   display: flex;
   flex-direction: column;
@@ -77,6 +92,14 @@ watch(
 
     &.mobile {
       flex-direction: column-reverse;
+    }
+
+    .el-card__header {
+      display: flex;
+      > .el-icon {
+        font-size: 18px;
+        margin-right: 5px;
+      }
     }
   }
 }
