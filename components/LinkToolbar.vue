@@ -26,7 +26,7 @@
 import Link from '@/interfaces/Link'
 import { arrayMoveMutable } from 'array-move'
 import { storeToRefs } from 'pinia'
-import { useLinkStore } from '@/stores/link'
+import { useLinksStore } from '@/stores/links'
 import { useConfirmPopupStore } from '~/stores/popups/confirmPopup'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { ArrowLeft, Close, EditPen, ArrowRight } from '@element-plus/icons-vue'
@@ -36,7 +36,7 @@ const emit = defineEmits(['close'])
 
 const confirmPopupStore = useConfirmPopupStore()
 const addPopupStore = useAddPopupStore()
-const linkStore = useLinkStore()
+const linkStore = useLinksStore()
 const { links } = storeToRefs(linkStore)
 
 const moveOffset = ref(0)
@@ -88,7 +88,10 @@ const actions = [
         content: `Вы уверены, что хотите удалить "${link.value!.title}"?`,
         confirm: async () => {
           close()
-          await $fetch('/api/links/delete', { method: 'POST', body: link.value })
+          await $fetch('/api/links/delete', {
+            method: 'POST',
+            body: link.value,
+          })
           await linkStore.loadLinks()
         },
       })

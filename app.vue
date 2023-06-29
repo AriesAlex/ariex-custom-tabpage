@@ -27,7 +27,7 @@
 
 <script setup lang="ts">
 import LinksGrid from '@/components/LinksGrid.vue'
-import { useLinkStore } from '@/stores/link'
+import { useLinksStore } from '@/stores/links'
 import { useSettingsStore } from '@/stores/settings'
 import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
@@ -41,7 +41,7 @@ const lastDragPos = ref(0)
 
 const addPopupStore = useAddPopupStore()
 
-const linkStore = useLinkStore()
+const linkStore = useLinksStore()
 linkStore.loadLinks()
 
 const settingsStore = useSettingsStore()

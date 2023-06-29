@@ -4,7 +4,7 @@ interface State {
   links: Link[]
 }
 
-export const useLinkStore = defineStore('link', {
+export const useLinksStore = defineStore('links', {
   state: (): State => ({
     links: [],
   }),

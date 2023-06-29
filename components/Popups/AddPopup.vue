@@ -42,12 +42,12 @@ import { Buffer } from 'buffer'
 import { storeToRefs } from 'pinia'
 import { useAddPopupStore, DEFAULT_ICON } from '~/stores/popups/addPopup'
 import { useAlertPopupStore } from '~/stores/popups/alertPopup'
-import { useLinkStore } from '@/stores/link'
+import { useLinksStore } from '@/stores/links'
 import { ElInput as ElInputComponent } from 'element-plus'
 
 const alertPopupStore = useAlertPopupStore()
 const addPopupStore = useAddPopupStore()
-const linkStore = useLinkStore()
+const linkStore = useLinksStore()
 const { active, settings } = storeToRefs(addPopupStore)
 const { hide } = addPopupStore
 

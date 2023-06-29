@@ -32,7 +32,7 @@
 </template>
 
 <script setup lang="ts">
-import { useLinkStore } from '@/stores/link'
+import { useLinksStore } from '@/stores/links'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
@@ -40,7 +40,7 @@ import { useDebounceFn, useThrottleFn, useTimeoutFn } from '@vueuse/shared'
 
 const emit = defineEmits(['recalculate', 'add'])
 
-const linkStore = useLinkStore()
+const linkStore = useLinksStore()
 const { links } = storeToRefs(linkStore)
 
 const gap = ref(15)
