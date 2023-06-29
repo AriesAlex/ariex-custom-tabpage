@@ -1,37 +1,22 @@
 <template>
-  <div
-    id="app"
-    @touchstart="resetDragPos"
-    @touchmove="dragOffset"
-    v-if="settingsStore.settings"
-  >
-    <AddPopup />
-    <ConfirmPopup />
-    <AlertPopup />
-    <video
-      :src="
-        isFull
-          ? settingsStore.settings.wallpaperSrc
-          : settingsStore.settings.mobileWallpaperSrc
-      "
-      class="background"
-      autoplay
-      muted
-      loop
-    />
+  <div id="app" @touchstart="resetDragPos" @touchmove="dragOffset">
+    <Background />
     <div class="grid" :style="{ bottom: offset + 'px' }">
       <LinksGrid ref="grid" @add="openPopup" @recalculate="resetOffset" />
     </div>
+
+    <AddPopup />
+    <ConfirmPopup />
+    <AlertPopup />
   </div>
 </template>
 
 <script setup lang="ts">
 import LinksGrid from '@/components/LinksGrid.vue'
 import { useLinksStore } from '@/stores/links'
-import { useSettingsStore } from '@/stores/settings'
 import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
-const isFull = useIsFull()
+import { useSettingsStore } from '@/stores/settings'
 
 const MIN_GRID_HEIGHT = 140
 
@@ -97,16 +82,6 @@ function openPopup() {
 
 <style lang="scss" scoped>
 #app {
-  > .background {
-    filter: brightness(0.8);
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    object-position: top;
-    z-index: -1;
-  }
-
   > .grid {
     width: 100%;
     display: flex;

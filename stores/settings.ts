@@ -11,8 +11,10 @@ export const useSettingsStore = defineStore('settings', {
   actions: {
     async loadSettings() {
       if (process.server)
-        this.settings = (await useFetch<Settings>('/api/settings/get')).data.value
-      else this.settings = (await $fetch<Settings>('/api/settings/get'))
+        this.settings = (
+          await useFetch<Settings>('/api/settings/get')
+        ).data.value
+      else this.settings = await $fetch<Settings>('/api/settings/get')
     },
   },
 })
