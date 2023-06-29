@@ -1,8 +1,9 @@
 export type WallpaperType = 'video' | 'image' | 'color'
 
 export default interface Settings {
-  wallpaperType: WallpaperType,
-  wallpaperSrc: string,
-  mobileWallpaperType: WallpaperType,
-  mobileWallpaperSrc: string,
+  wallpaperType: WallpaperType
+  wallpaperSrc: string
+  mobileWallpaperType: WallpaperType
+  mobileWallpaperSrc: string
+  wallpaperDarkening: boolean
 }

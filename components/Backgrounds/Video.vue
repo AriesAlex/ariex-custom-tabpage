@@ -9,7 +9,7 @@
 </template>
 
 <script setup lang="ts">
-import { useSettingsStore } from '../../stores/settings'
+import { useSettingsStore } from '~/stores/settings'
 const settingsStore = useSettingsStore()
 const isFull = useIsFull()
 
@@ -22,7 +22,6 @@ const currentBackgroundSrc = computed(() =>
 
 <style lang="scss" scoped>
 .video-background {
-  filter: brightness(0.8);
   position: fixed;
   width: 100vw;
   height: 100vh;

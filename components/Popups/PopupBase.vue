@@ -12,7 +12,9 @@
           <i class="el-icon-close" />
         </div>
       </div>
-      <slot />
+      <div class="popup-content">
+        <slot />
+      </div>
     </div>
   </div>
 </template>
@@ -39,12 +41,6 @@ const close = () => emit('close')
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow: scroll;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
   z-index: 2;
   pointer-events: none;
   &.show {
@@ -79,6 +75,9 @@ const close = () => emit('close')
     font-size: 15px;
     transition: 0.25s all;
     transform: scaleX(0);
+    max-width: 90vw;
+    max-height: 90vh;
+
     > .header {
       display: flex;
       justify-content: space-between;
@@ -95,6 +94,17 @@ const close = () => emit('close')
         cursor: pointer;
         margin-left: 15px;
         font-size: 18px;
+      }
+    }
+
+    > .popup-content {
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
       }
     }
   }

@@ -1,11 +1,15 @@
 <template>
   <div id="app" @touchstart="resetDragPos" @touchmove="dragOffset">
     <Background />
+
+    <SettingsBtn :show="showSettingsBtn" />
+
     <div class="grid" :style="{ bottom: offset + 'px' }">
       <LinksGrid ref="grid" @add="openPopup" @recalculate="resetOffset" />
     </div>
 
     <AddPopup />
+    <SettingsPopup />
     <ConfirmPopup />
     <AlertPopup />
   </div>
@@ -34,6 +38,15 @@ settingsStore.loadSettings()
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
+const showSettingsBtn = ref(true)
+
+updateShowSettingsBtn()
+function updateShowSettingsBtn() {
+  showSettingsBtn.value = grid.value
+    ? grid.value.$el.getBoundingClientRect().top > 0
+    : true
+}
+
 function resetOffset() {
   let gridHeight = 0
   if (grid.value) gridHeight = grid.value.$el.getBoundingClientRect().height
@@ -57,6 +70,8 @@ function dragOffset({ touches }: TouchEvent) {
   offset.value += newOffset
   if (offset.value < initialOffset.value) offset.value = initialOffset.value
   if (offset.value > 0) offset.value = 0
+
+  updateShowSettingsBtn()
 }
 
 watchDebounced(

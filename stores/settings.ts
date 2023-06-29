@@ -16,5 +16,8 @@ export const useSettingsStore = defineStore('settings', {
         ).data.value
       else this.settings = await $fetch<Settings>('/api/settings/get')
     },
+    async applySettings() {
+      await $fetch('/api/settings/patch', { method: 'POST', body: this.settings })
+    }
   },
 })

@@ -44,6 +44,7 @@ export const settingsStorage = new Storage<Settings>('settings.json', {
   wallpaperSrc: 'video.mp4',
   mobileWallpaperType: 'video',
   mobileWallpaperSrc: 'video_mobile.mp4',
+  wallpaperDarkening: true,
 })
 
 export const linksStorage = new Storage<Link[]>('links.json', [])
