@@ -1,10 +1,19 @@
 <template>
-  <div id="app" @touchstart="resetDragPos" @touchmove="dragOffset">
+  <div
+    id="app"
+    @touchstart="resetDragPos"
+    @touchmove="dragOffset"
+    v-if="settingsStore.settings"
+  >
     <AddPopup />
     <ConfirmPopup />
     <AlertPopup />
     <video
-      :src="isFull ? '/video.mp4' : '/video_mini.mp4'"
+      :src="
+        isFull
+          ? settingsStore.settings.wallpaperSrc
+          : settingsStore.settings.mobileWallpaperSrc
+      "
       class="background"
       autoplay
       muted
@@ -19,6 +28,7 @@
 <script setup lang="ts">
 import LinksGrid from '@/components/LinksGrid.vue'
 import { useLinkStore } from '@/stores/link'
+import { useSettingsStore } from '@/stores/settings'
 import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 const isFull = useIsFull()
@@ -30,8 +40,12 @@ const initialOffset = ref(0)
 const lastDragPos = ref(0)
 
 const addPopupStore = useAddPopupStore()
+
 const linkStore = useLinkStore()
 linkStore.loadLinks()
+
+const settingsStore = useSettingsStore()
+settingsStore.loadSettings()
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 

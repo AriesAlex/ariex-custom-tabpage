@@ -56,7 +56,7 @@ const fileRef = ref<InstanceType<typeof HTMLInputElement> | null>(null)
 
 function add() {
   hide()
-  $fetch('/api/add', { method: 'POST', body: settings.value.link })
+  $fetch('/api/links/add', { method: 'POST', body: settings.value.link })
     .catch(err => {
       alertPopupStore.show({
         content: err.data.message,

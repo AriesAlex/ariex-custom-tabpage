@@ -1,4 +1,4 @@
-import storage from './lib/storage'
+import { linksStorage } from '../lib/storages'
 
 export default defineEventHandler(async e => {
   const body = await readBody(e)
@@ -9,6 +9,6 @@ export default defineEventHandler(async e => {
       message: `Укажите id ссылки`,
     })
 
-  storage.value = storage.value.filter(l => l.id != id)
+  linksStorage.value.value = linksStorage.value.value.filter(l => l.id != id)
   return 'ok'
 })

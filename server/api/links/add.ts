@@ -1,4 +1,4 @@
-import storage from './lib/storage'
+import { linksStorage } from '../lib/storages'
 import { v4 } from 'uuid'
 
 export default defineEventHandler(async e => {
@@ -14,15 +14,17 @@ export default defineEventHandler(async e => {
   if (!link.icon) link.icon = null
 
   if (link.id) {
-    const alreadyExistingLink = storage.value.findIndex(l => l.id == link.id)
+    const alreadyExistingLink = linksStorage.value.value.findIndex(
+      l => l.id == link.id
+    )
     if (!alreadyExistingLink) {
       throw createError({
         statusCode: 400,
         message: `Ссылки с таким id не существует`,
       })
     }
-    storage.value[alreadyExistingLink] = link
-  } else storage.value.push({ ...link, id: v4() })
+    linksStorage.value.value[alreadyExistingLink] = link
+  } else linksStorage.value.value.push({ ...link, id: v4() })
 
   return 'ok'
 })

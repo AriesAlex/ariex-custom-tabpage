@@ -1,4 +1,4 @@
-import storage from './lib/storage'
+import { linksStorage } from '../lib/storages'
 import { arrayMoveMutable } from 'array-move'
 
 export default defineEventHandler(async e => {
@@ -17,8 +17,8 @@ export default defineEventHandler(async e => {
       message: `Укажите смещение`,
     })
 
-  const index = storage.value.findIndex(l => l.id == id)
-  arrayMoveMutable(storage.value, index, index + offset)
+  const index = linksStorage.value.value.findIndex(l => l.id == id)
+  arrayMoveMutable(linksStorage.value.value, index, index + offset)
 
   return 'ok'
 })

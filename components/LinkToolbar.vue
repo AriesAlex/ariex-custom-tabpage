@@ -62,7 +62,7 @@ function move(direction: 'left' | 'right') {
 
     if (!moveOffset.value) return
 
-    $fetch('/api/move', {
+    $fetch('/api/links/move', {
       method: 'POST',
       body: { ...link.value, offset: moveOffset.value },
     }).then(() => {
@@ -88,7 +88,7 @@ const actions = [
         content: `Вы уверены, что хотите удалить "${link.value!.title}"?`,
         confirm: async () => {
           close()
-          await $fetch('api/delete', { method: 'POST', body: link.value })
+          await $fetch('/api/links/delete', { method: 'POST', body: link.value })
           await linkStore.loadLinks()
         },
       })
