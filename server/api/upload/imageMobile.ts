@@ -2,10 +2,15 @@ import fs from 'fs-extra'
 import formidable from 'formidable'
 import { IncomingMessage } from 'http'
 
+const isDev = process.env.NODE_ENV == 'development'
+const publicDir = `${isDev ? '' : '.output/'}public`
+
 export default defineEventHandler(async e => {
   const files = (await getFiles(e.node.req)) as any
   const file = files[Object.keys(files)[0]]
-  fs.moveSync(file[0].filepath, 'public/image_mobile.jpg', { overwrite: true })
+  fs.moveSync(file[0].filepath, `${publicDir}/image_mobile.jpg`, {
+    overwrite: true,
+  })
   return 'ok'
 })
 

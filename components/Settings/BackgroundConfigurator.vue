@@ -42,11 +42,15 @@ async function uploadFile() {
 
   const form = new FormData()
   form.append('file', file)
+  fileRef.value.value = ''
 
   await $fetch(
     '/api/upload/' + wallpaperType.value + (props.mobile ? 'Mobile' : ''),
     { method: 'post', body: form }
   )
+
+  await settingsStore.applySettings()
+  location.reload()
 }
 
 const wallpaperType = computed({

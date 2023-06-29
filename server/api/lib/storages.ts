@@ -41,9 +41,9 @@ class Storage<T> {
 
 export const settingsStorage = new Storage<Settings>('settings.json', {
   wallpaperType: 'video',
-  wallpaperSrc: 'video.mp4',
+  wallpaperSrc: 'api/static/video',
   mobileWallpaperType: 'video',
-  mobileWallpaperSrc: 'video_mobile.mp4',
+  mobileWallpaperSrc: 'api/static/video_mobile',
   wallpaperDarkening: true,
 })
 
