@@ -5,8 +5,13 @@
     <el-option label="Цвет" value="color" />
   </el-select>
 
-  <div v-if="wallpaperType == 'video'"></div>
-  <div v-if="wallpaperType == 'image'"></div>
+  <div class="uploader" v-if="['video', 'image'].includes(wallpaperType!)">
+    <div class="icon">
+      <Upload />
+      <input type="file" @change="uploadFile" ref="fileRef" />
+    </div>
+  </div>
+
   <div v-if="wallpaperType == 'color'" class="color-settings">
     <div class="picker">
       <el-color-picker v-model="wallpaperSrc" size="large" />
@@ -23,10 +28,26 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '~/stores/settings'
+import { Upload } from '@element-plus/icons-vue'
 
 const props = defineProps<{ mobile: boolean }>()
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
+
+const fileRef = ref<InstanceType<typeof HTMLInputElement> | null>(null)
+
+async function uploadFile() {
+  if (fileRef.value?.files == null) return
+  const file = fileRef.value.files[0]
+
+  const form = new FormData()
+  form.append('file', file)
+
+  await $fetch(
+    '/api/upload/' + wallpaperType.value + (props.mobile ? 'Mobile' : ''),
+    { method: 'post', body: form }
+  )
+}
 
 const wallpaperType = computed({
   get() {
@@ -58,6 +79,7 @@ const wallpaperSrc = computed({
 <style lang="scss" scoped>
 .color-settings {
   margin-top: 25px;
+
   > .picker {
     display: flex;
     align-items: center;
@@ -71,6 +93,34 @@ const wallpaperSrc = computed({
     max-width: 220px;
     font-size: 13px;
     opacity: 0.8;
+  }
+}
+
+.uploader {
+  margin-top: 25px;
+  display: flex;
+  justify-content: center;
+
+  .icon {
+    width: 32px;
+    height: 32px;
+    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
+    position: relative;
+
+    input,
+    svg {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+    input {
+      opacity: 0;
+      cursor: pointer;
+
+      &::-webkit-file-upload-button {
+        cursor: pointer;
+      }
+    }
   }
 }
 </style>
