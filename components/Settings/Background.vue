@@ -1,27 +1,25 @@
 <template>
   <el-tab-pane v-if="settings" label="Фон" class="background-pane">
-    <div class="reversable-pane" :class="{ mobile: !isFull }">
-      <el-card shadow="never">
-        <SettingsBackgroundConfigurator :mobile="false" />
+    <el-card shadow="never">
+      <SettingsBackgroundConfigurator :mobile="false" />
 
-        <template v-slot:header>
-          <el-icon>
-            <Platform />
-          </el-icon>
-          <div>Десктопная версия</div>
-        </template>
-      </el-card>
-      <el-card shadow="never">
-        <SettingsBackgroundConfigurator :mobile="true" />
+      <template v-slot:header>
+        <el-icon>
+          <Platform />
+        </el-icon>
+        <div>Десктопная версия</div>
+      </template>
+    </el-card>
+    <el-card shadow="never">
+      <SettingsBackgroundConfigurator :mobile="true" />
 
-        <template v-slot:header>
-          <el-icon>
-            <Iphone />
-          </el-icon>
-          <div>Мобильная версия</div>
-        </template>
-      </el-card>
-    </div>
+      <template v-slot:header>
+        <el-icon>
+          <Iphone />
+        </el-icon>
+        <div>Мобильная версия</div>
+      </template>
+    </el-card>
     <el-switch
       v-model="settings.wallpaperDarkening"
       active-text="Затемнение фона"
@@ -85,21 +83,11 @@ watch(
   flex-direction: column;
   gap: 25px;
 
-  > .reversable-pane {
+  .el-card__header {
     display: flex;
-    flex-direction: column;
-    gap: 25px;
-
-    &.mobile {
-      flex-direction: column-reverse;
-    }
-
-    .el-card__header {
-      display: flex;
-      > .el-icon {
-        font-size: 18px;
-        margin-right: 5px;
-      }
+    > .el-icon {
+      font-size: 18px;
+      margin-right: 5px;
     }
   }
 }
