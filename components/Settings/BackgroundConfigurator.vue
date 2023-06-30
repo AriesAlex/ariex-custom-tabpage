@@ -28,9 +28,11 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '~/stores/settings'
+import { useSettingsPopupStore } from '~/stores/popups/settingsPopup'
 import { Upload } from '@element-plus/icons-vue'
 
 const props = defineProps<{ mobile: boolean }>()
+const settingsPopupStore = useSettingsPopupStore()
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
 
@@ -44,13 +46,17 @@ async function uploadFile() {
   form.append('file', file)
   fileRef.value.value = ''
 
-  await $fetch(
+  const cacheHash = await $fetch(
     '/api/upload/' + wallpaperType.value + (props.mobile ? 'Mobile' : ''),
     { method: 'post', body: form }
   )
 
+  if (wallpaperSrc.value)
+    wallpaperSrc.value =
+      wallpaperSrc.value?.split('?cacheHash')[0] + '?cacheHash' + cacheHash
+
   await settingsStore.applySettings()
-  location.reload()
+  settingsPopupStore.hide()
 }
 
 const wallpaperType = computed({

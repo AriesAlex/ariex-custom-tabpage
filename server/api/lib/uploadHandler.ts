@@ -1,5 +1,6 @@
 import fs from 'fs-extra'
 import formidable from 'formidable'
+import crypto from 'crypto'
 import { IncomingMessage } from 'http'
 import { H3Event } from 'h3'
 
@@ -13,7 +14,11 @@ export default async (e: H3Event, filename: string) => {
   fs.moveSync(file[0].filepath, `${publicDir}/${filename}`, {
     overwrite: true,
   })
-  return 'ok'
+
+  const fileRaw = await fs.readFile(`${publicDir}/${filename}`)
+  const hash = crypto.createHash('md5').update(fileRaw).digest('hex')
+
+  return hash
 }
 
 function getFiles(req: IncomingMessage) {

@@ -1,8 +1,5 @@
-import fs from 'fs-extra'
+import staticHandler from '../lib/staticHandler'
 
-const isDev = process.env.NODE_ENV == 'development'
-const publicDir = `${isDev ? '' : '.output/'}public`
-
-export default defineEventHandler(e => {
-  return fs.readFileSync(`${publicDir}/video.mp4`)
-})
+export default defineEventHandler(
+  async e => await staticHandler(e, 'video.mp4')
+)

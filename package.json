@@ -22,10 +22,12 @@
     "@element-plus/nuxt": "^1.0.4",
     "@pinia/nuxt": "^0.4.8",
     "@types/formidable": "^2.0.6",
+    "@types/mime-types": "^2.1.1",
     "array-move": "^4.0.0",
     "deepmerge": "^4.3.1",
     "formidable": "^3.5.0",
     "fs-extra": "^11.1.1",
+    "mime-types": "^2.1.35",
     "mobile-detect": "^1.4.5",
     "pinia": "^2.0.34",
     "uuid": "^9.0.0"
