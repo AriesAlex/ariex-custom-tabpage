@@ -42,11 +42,11 @@ watch(
   type => {
     switch (type) {
       case 'video': {
-        settings.value!.wallpaperSrc = 'api/static/video'
+        settings.value!.wallpaperSrc = '/api/static/video'
         break
       }
       case 'image': {
-        settings.value!.wallpaperSrc = 'api/static/image'
+        settings.value!.wallpaperSrc = '/api/static/image'
         break
       }
       case 'color': {
@@ -61,11 +61,11 @@ watch(
   type => {
     switch (type) {
       case 'video': {
-        settings.value!.mobileWallpaperSrc = 'api/static/video_mobile'
+        settings.value!.mobileWallpaperSrc = '/api/static/video_mobile'
         break
       }
       case 'image': {
-        settings.value!.mobileWallpaperSrc = 'api/static/image_mobile'
+        settings.value!.mobileWallpaperSrc = '/api/static/image_mobile'
         break
       }
       case 'color': {
