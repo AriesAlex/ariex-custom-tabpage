@@ -1,5 +1,8 @@
 <template>
-  <div class="color-background" :style="{ background: currentBackgroundSrc }" />
+  <div
+    class="color-background"
+    :style="{ '--background-src': currentBackgroundSrc }"
+  />
 </template>
 
 <script setup lang="ts">
@@ -9,8 +12,8 @@ const isFull = useIsFull()
 
 const currentBackgroundSrc = computed(() =>
   isFull.value
-    ? settingsStore.settings?.wallpaperSrc
-    : settingsStore.settings?.mobileWallpaperSrc
+    ? settingsStore.settings.wallpaperSrc
+    : settingsStore.settings.mobileWallpaperSrc
 )
 </script>
 
@@ -22,5 +25,8 @@ const currentBackgroundSrc = computed(() =>
   object-fit: cover;
   object-position: top;
   z-index: -1;
+  background: var(--background-src);
+  background-size: cover;
+  background-position: center;
 }
 </style>

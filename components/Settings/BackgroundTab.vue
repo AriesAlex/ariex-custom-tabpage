@@ -1,5 +1,5 @@
 <template>
-  <el-tab-pane v-if="settings" label="Фон" class="background-pane">
+  <el-tab-pane label="Фон" class="background-pane">
     <el-card shadow="never">
       <SettingsBackgroundConfigurator :mobile="false" />
 

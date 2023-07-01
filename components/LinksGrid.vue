@@ -1,17 +1,19 @@
 <template>
-  <div id="links" ref="root">
-    <div
-      class="grid"
-      ref="grid"
-      :style="{
-        'grid-template-columns': `repeat(${columnsCount}, 1fr)`,
-        width: `${spacePerLinks}px`,
-      }"
-    >
+  <div
+    id="links"
+    ref="root"
+    :style="{
+      '--background-color': settings.dockPanelColor,
+      '--text-color': settings.dockPanelTextColor,
+      '--columns-count': columnsCount,
+      '--space-per-links': spacePerLinks + 'px',
+      '--link-width': linkWidth + 'px'
+    }"
+  >
+    <div class="grid" ref="grid">
       <a
         class="link"
         :class="{ active: currentLink && currentLink.id == link.id }"
-        :style="{ width: linkWidth + 'px' }"
         v-for="link in [...links, addLink]"
         :key="link.url"
         :href="link.url"
@@ -33,13 +35,16 @@
 
 <script setup lang="ts">
 import { useLinksStore } from '@/stores/links'
+import { useSettingsStore } from '@/stores/settings'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
-import { useDebounceFn, useThrottleFn, useTimeoutFn } from '@vueuse/shared'
+import { useDebounceFn } from '@vueuse/shared'
 
 const emit = defineEmits(['recalculate', 'add'])
 
+const settingsStore = useSettingsStore()
+const { settings } = storeToRefs(settingsStore)
 const linkStore = useLinksStore()
 const { links } = storeToRefs(linkStore)
 
@@ -125,11 +130,15 @@ watch(
   }
 
   > .grid {
+    background: var(--background-color);
+    background-size: cover;
+    background-position: center;
     box-shadow: 0 1px 11px 1px rgb(0 0 0 / 20%);
-    background-color: rgba(255, 255, 255, 0.8);
     border-radius: 8px;
     padding: 15px;
     display: grid;
+    grid-template-columns: repeat(var(--columns-count), 1fr);
+    width: var(--space-per-links);
 
     > .link {
       display: block;
@@ -143,7 +152,8 @@ watch(
       transition: 0.2s all;
       border: solid 1px transparent;
       text-decoration: none;
-      color: black;
+      color: var(--text-color);
+      width: var(--link-width);
 
       &:active {
         transform: scale(1.1);

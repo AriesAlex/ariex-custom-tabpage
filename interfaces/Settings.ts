@@ -6,4 +6,6 @@ export default interface Settings {
   mobileWallpaperType: WallpaperType
   mobileWallpaperSrc: string
   wallpaperDarkening: boolean
+  dockPanelColor: string
+  dockPanelTextColor: string
 }

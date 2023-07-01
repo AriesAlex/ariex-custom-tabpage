@@ -2,11 +2,13 @@
   <div id="settings-popup">
     <PopupBase title="Настройки" :show="active" @close="close">
       <el-tabs :tab-position="isFull ? 'left' : 'top'">
-        <SettingsBackground />
+        <SettingsBackgroundTab />
+        <SettingsDockPanelTab />
       </el-tabs>
 
-      <div class="apply-btn-wrapper">
-        <ElButton type="primary" @click="apply">Применить</ElButton>
+      <div class="options">
+        <ElButton type="danger" text @click="resetSettings">Сбросить настройки</ElButton>
+        <ElButton type="primary" @click="applySettings">Применить</ElButton>
       </div>
     </PopupBase>
   </div>
@@ -23,9 +25,13 @@ const { active } = storeToRefs(settingsPopupStore)
 
 const isFull = useIsFull()
 
-async function apply() {
+async function applySettings() {
   await settingsStore.applySettings()
   close()
+}
+
+function resetSettings() {
+  settingsStore.resetSettings()
 }
 
 function close() {
@@ -36,13 +42,14 @@ function close() {
 
 <style lang="scss">
 #settings-popup .popup-content {
-  >.el-tabs {
+  > .el-tabs {
     overflow: initial;
   }
-  > .apply-btn-wrapper {
+  > .options {
     margin-top: 25px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 </style>

@@ -11,7 +11,10 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@types/formidable": "^3.4.0",
     "@types/fs-extra": "^11.0.1",
+    "@types/mime-types": "^2.1.1",
+    "@types/ungap__structured-clone": "^0.3.0",
     "@types/uuid": "^9.0.1",
     "cross-env": "^7.0.3",
     "nuxt": "^3.3.3",
@@ -21,8 +24,7 @@
     "@element-plus/icons-vue": "^2.1.0",
     "@element-plus/nuxt": "^1.0.4",
     "@pinia/nuxt": "^0.4.8",
-    "@types/formidable": "^2.0.6",
-    "@types/mime-types": "^2.1.1",
+    "@ungap/structured-clone": "^1.2.0",
     "array-move": "^4.0.0",
     "deepmerge": "^4.3.1",
     "formidable": "^3.5.0",

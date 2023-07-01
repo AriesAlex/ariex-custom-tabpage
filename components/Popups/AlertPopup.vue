@@ -1,6 +1,6 @@
 <template>
   <div id="alert-popup">
-    <PopupBase :title="settings.title" :show="active" @close="hide">
+    <PopupBase :title="settings.title!" :show="active" @close="hide">
       <div v-html="formattedContent" />
     </PopupBase>
   </div>

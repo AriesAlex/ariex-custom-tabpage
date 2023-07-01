@@ -3,7 +3,7 @@
     v-if="backgroundComponent"
     :is="backgroundComponent"
     class="background"
-    :class="{ darkening: settings?.wallpaperDarkening }"
+    :class="{ darkening: settings.wallpaperDarkening }"
   />
 </template>
 
@@ -37,6 +37,7 @@ const backgroundComponent = computed(() =>
 
 <style lang="scss" scoped>
 .background {
+  transition: 0.5s filter;
   &.darkening {
     filter: brightness(0.8);
   }

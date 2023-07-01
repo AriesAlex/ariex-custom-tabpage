@@ -4,6 +4,7 @@ import { watch, ref, Ref, WatchStopHandle } from 'vue'
 import Link from '~/interfaces/Link'
 import Settings from '~/interfaces/Settings'
 import deepmerge from 'deepmerge'
+import getDefaultSettings from '~/shared/DefaultSettings'
 const { all: mergeObjects } = deepmerge
 
 class Storage<T> {
@@ -39,13 +40,7 @@ class Storage<T> {
   }
 }
 
-export const settingsStorage = new Storage<Settings>('settings.json', {
-  wallpaperType: 'video',
-  wallpaperSrc: 'api/static/video',
-  mobileWallpaperType: 'video',
-  mobileWallpaperSrc: 'api/static/video_mobile',
-  wallpaperDarkening: true,
-})
+export const settingsStorage = new Storage<Settings>('settings.json', getDefaultSettings())
 
 export const linksStorage = new Storage<Link[]>('links.json', [])
 linksStorage.value.value

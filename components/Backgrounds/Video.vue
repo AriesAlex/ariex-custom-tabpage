@@ -15,8 +15,8 @@ const isFull = useIsFull()
 
 const currentBackgroundSrc = computed(() =>
   isFull.value
-    ? settingsStore.settings?.wallpaperSrc
-    : settingsStore.settings?.mobileWallpaperSrc
+    ? settingsStore.settings.wallpaperSrc
+    : settingsStore.settings.mobileWallpaperSrc
 )
 </script>
 

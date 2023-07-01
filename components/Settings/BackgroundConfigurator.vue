@@ -13,15 +13,10 @@
   </div>
 
   <div v-if="wallpaperType == 'color'" class="color-settings">
-    <div class="picker">
-      <el-color-picker v-model="wallpaperSrc" size="large" />
-      <div>Выберите цвет</div>
-    </div>
-    <el-input v-model="wallpaperSrc" placeholder="Или введите вручную" />
-    <div class="hint">
-      Поддерживаются css-свойства. Например
-      <a target="_blank" href="https://cssgradient.io">linear-gradient</a> и url
-    </div>
+    <SettingsExtendedColorPicker
+        v-model="settings.wallpaperSrc"
+        title="Выберите цвет"
+      />
   </div>
 </template>
 
@@ -89,21 +84,6 @@ const wallpaperSrc = computed({
 <style lang="scss" scoped>
 .color-settings {
   margin-top: 25px;
-
-  > .picker {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 5px;
-  }
-
-  > .hint {
-    margin-top: 5px;
-    margin-left: 5px;
-    max-width: 220px;
-    font-size: 13px;
-    opacity: 0.8;
-  }
 }
 
 .uploader {
