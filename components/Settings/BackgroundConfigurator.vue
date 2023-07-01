@@ -13,10 +13,7 @@
   </div>
 
   <div v-if="wallpaperType == 'color'" class="color-settings">
-    <SettingsExtendedColorPicker
-        v-model="settings.wallpaperSrc"
-        title="Выберите цвет"
-      />
+    <SettingsExtendedColorPicker v-model="wallpaperSrc" title="Выберите цвет" />
   </div>
 </template>
 
