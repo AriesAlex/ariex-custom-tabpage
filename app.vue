@@ -38,14 +38,17 @@ settingsStore.loadSettings()
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
+const isFull = useIsFull()
+
 const showSettingsBtn = ref(true)
 
-updateShowSettingsBtn()
 function updateShowSettingsBtn() {
   showSettingsBtn.value = grid.value
-    ? grid.value.$el.getBoundingClientRect().top > 0
+    ? isFull.value || grid.value.$el.getBoundingClientRect().top > 65
     : true
 }
+updateShowSettingsBtn()
+useWindowEvent('resize', () => updateShowSettingsBtn())
 
 function resetOffset() {
   let gridHeight = 0
