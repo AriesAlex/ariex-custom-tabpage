@@ -14,7 +14,7 @@
     @update:modelValue="newValue => $emit('update:modelValue', newValue)"
     placeholder="Или введите вручную"
   />
-  <div class="hint">
+  <div class="hint" v-if="showHint">
     Поддерживаются css-свойства. Например
     <a target="_blank" href="https://cssgradient.io">linear-gradient</a> и
     <a target="_blank" href="https://developer.mozilla.org/ru/docs/Web/CSS/url"
@@ -24,7 +24,14 @@
 </template>
 
 <script setup lang="ts">
-defineProps<{ modelValue: string | undefined; title: string }>()
+withDefaults(
+  defineProps<{
+    modelValue: string | undefined
+    title: string
+    showHint: boolean
+  }>(),
+  { showHint: true }
+)
 defineEmits(['update:modelValue'])
 </script>
 

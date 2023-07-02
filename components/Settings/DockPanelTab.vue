@@ -11,6 +11,7 @@
       <SettingsExtendedColorPicker
         v-model="settings.dockPanelTextColor"
         title="Выберите цвет текста"
+        :show-hint="false"
       />
     </el-card>
   </el-tab-pane>
