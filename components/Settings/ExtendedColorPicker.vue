@@ -28,7 +28,7 @@ withDefaults(
   defineProps<{
     modelValue: string | undefined
     title: string
-    showHint: boolean
+    showHint?: boolean
   }>(),
   { showHint: true }
 )

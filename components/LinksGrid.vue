@@ -6,8 +6,7 @@
       '--background-color': settings.dockPanelColor,
       '--text-color': settings.dockPanelTextColor,
       '--columns-count': columnsCount,
-      '--space-per-links': spacePerLinks + 'px',
-      '--link-width': linkWidth + 'px'
+      '--space-per-links': isFull ? '' : spacePerLinks + 'px',
     }"
   >
     <div class="grid" ref="grid">
@@ -43,13 +42,15 @@ import { useDebounceFn } from '@vueuse/shared'
 
 const emit = defineEmits(['recalculate', 'add'])
 
+const isFull = useIsFull()
+
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
 const linkStore = useLinksStore()
 const { links } = storeToRefs(linkStore)
 
 const gap = ref(15)
-const linkWidth = ref(48)
+const linkWidth = ref(58)
 const columnsCount = ref(0)
 const spacePerLinks = ref(0)
 const currentLink = ref<Link | null>(null)
@@ -122,7 +123,8 @@ watch(
   display: flex;
   justify-content: center;
   align-items: center;
-  max-width: 50%;
+  max-width: 1200px;
+  padding: 0 30px;
 
   @media (max-width: 800px) {
     align-items: flex-end;
@@ -153,7 +155,6 @@ watch(
       border: solid 1px transparent;
       text-decoration: none;
       color: var(--text-color);
-      width: var(--link-width);
 
       &:active {
         transform: scale(1.1);
@@ -177,6 +178,8 @@ watch(
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        overflow-wrap: anywhere;
+        text-wrap: balance;
       }
 
       > .el-icon {

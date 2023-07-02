@@ -4,7 +4,7 @@
 
     <SettingsBtn :show="showSettingsBtn" />
 
-    <div class="grid" :style="{ bottom: offset + 'px' }">
+    <div class="grid-wrapper" :style="{ bottom: offset + 'px' }">
       <LinksGrid ref="grid" @add="openPopup" @recalculate="resetOffset" />
     </div>
 
@@ -100,17 +100,16 @@ function openPopup() {
 
 <style lang="scss" scoped>
 #app {
-  > .grid {
+  > .grid-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
   }
 
   @media (max-width: 800px) {
-    > .grid {
-      height: initial;
+    > .grid-wrapper {
       position: fixed;
       left: 0;
       right: 0;
