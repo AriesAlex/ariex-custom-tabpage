@@ -21,6 +21,7 @@ import { useLinksStore } from '@/stores/links'
 import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { useSettingsStore } from '@/stores/settings'
+import { storeToRefs } from 'pinia'
 
 const MIN_GRID_HEIGHT = 140
 
@@ -35,6 +36,13 @@ linkStore.loadLinks()
 
 const settingsStore = useSettingsStore()
 settingsStore.loadSettings()
+const { settings } = storeToRefs(settingsStore)
+
+useHead({
+  style: computed(() => [
+    `body { background: ${settings.value.pageBackgroundColor} }`,
+  ]),
+})
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 

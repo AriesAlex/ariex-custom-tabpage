@@ -4,6 +4,7 @@
       <el-tabs :tab-position="isFull ? 'left' : 'top'">
         <SettingsBackgroundTab />
         <SettingsDockPanelTab />
+        <SettingsPageTab />
       </el-tabs>
 
       <div class="options">

@@ -8,4 +8,5 @@ export default interface Settings {
   wallpaperDarkening: boolean
   dockPanelColor: string
   dockPanelTextColor: string
+  pageBackgroundColor: string
 }

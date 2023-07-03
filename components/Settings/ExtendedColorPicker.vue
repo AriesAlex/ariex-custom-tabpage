@@ -9,6 +9,7 @@
     />
     <div>{{ title }}</div>
   </div>
+  <div class="description" v-if="showHint">{{ description }}</div>
   <el-input
     :modelValue="modelValue"
     @update:modelValue="value => updateValue(value || '')"
@@ -31,6 +32,7 @@ withDefaults(
   defineProps<{
     modelValue: string | undefined
     title: string
+    description?: string
     showHint?: boolean
   }>(),
   { showHint: true }
@@ -53,9 +55,9 @@ function updateValue(value: string) {
 }
 
 function setInputCaretPos(pos: number) {
-    setTimeout(() => {
-      inputEL.value?.input?.setSelectionRange(pos, pos)
-    }, 10)
+  setTimeout(() => {
+    inputEL.value?.input?.setSelectionRange(pos, pos)
+  }, 10)
 }
 </script>
 
@@ -67,11 +69,16 @@ function setInputCaretPos(pos: number) {
   margin-bottom: 5px;
 }
 
-.hint {
+.hint,
+.description {
   margin-top: 5px;
   margin-left: 5px;
   max-width: 220px;
   font-size: 13px;
   opacity: 0.8;
+
+  &.description {
+    margin-bottom: 15px;
+  }
 }
 </style>
