@@ -2,7 +2,7 @@
   <div class="picker">
     <el-color-picker
       :modelValue="modelValue"
-      @update:modelValue="newValue => $emit('update:modelValue', newValue)"
+      @update:modelValue="value => updateValue(value || '')"
       @active-change="color => $emit('update:modelValue', color)"
       :show-alpha="true"
       size="large"
@@ -11,8 +11,9 @@
   </div>
   <el-input
     :modelValue="modelValue"
-    @update:modelValue="newValue => $emit('update:modelValue', newValue)"
+    @update:modelValue="value => updateValue(value || '')"
     placeholder="Или введите вручную"
+    ref="inputEL"
   />
   <div class="hint" v-if="showHint">
     Поддерживаются css-свойства. Например
@@ -24,6 +25,8 @@
 </template>
 
 <script setup lang="ts">
+import { ElInput } from 'element-plus/es/components/input/index'
+
 withDefaults(
   defineProps<{
     modelValue: string | undefined
@@ -32,7 +35,28 @@ withDefaults(
   }>(),
   { showHint: true }
 )
-defineEmits(['update:modelValue'])
+const emit = defineEmits(['update:modelValue'])
+
+const inputEL = ref<InstanceType<typeof ElInput> | null>(null)
+
+function updateValue(value: string) {
+  if (value.startsWith('http')) {
+    value = `url(${value})`
+    setInputCaretPos(value.length - 1)
+  }
+  if (value.startsWith('to')) {
+    value = `linear-gradient(${value})`
+    setInputCaretPos(value.length - 1)
+  }
+
+  emit('update:modelValue', value)
+}
+
+function setInputCaretPos(pos: number) {
+    setTimeout(() => {
+      inputEL.value?.input?.setSelectionRange(pos, pos)
+    }, 10)
+}
 </script>
 
 <style lang="scss" scoped>
