@@ -8,8 +8,15 @@
       </el-tabs>
 
       <div class="options">
-        <ElButton type="danger" text @click="resetSettings">Сбросить настройки</ElButton>
-        <ElButton type="primary" @click="applySettings">Применить</ElButton>
+        <div class="left">
+          <LanguageSelector />
+          <ElButton type="danger" text @click="resetSettings">{{
+            isFull ? 'Сбросить настройки' : 'Сбросить'
+          }}</ElButton>
+        </div>
+        <div class="right">
+          <ElButton type="primary" @click="applySettings">Применить</ElButton>
+        </div>
       </div>
     </PopupBase>
   </div>
@@ -51,6 +58,12 @@ function close() {
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    > * {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
   }
 }
 </style>

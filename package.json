@@ -1,5 +1,6 @@
 {
   "name": "ariex-custom-tabpage",
+  "type": "module",
   "version": "1.5.0",
   "scripts": {
     "init": "npm i && npm run build && npm run start",
@@ -11,6 +12,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
+    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
     "@types/formidable": "^3.4.0",
     "@types/fs-extra": "^11.0.1",
     "@types/mime-types": "^2.1.1",

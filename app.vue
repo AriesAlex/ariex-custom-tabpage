@@ -21,6 +21,7 @@ import { useLinksStore } from '@/stores/links'
 import { watchDebounced } from '@vueuse/shared'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { useSettingsStore } from '@/stores/settings'
+import useConfigureI18n from '@/composables/useConfigureI18n'
 import { storeToRefs } from 'pinia'
 
 const MIN_GRID_HEIGHT = 140
@@ -43,6 +44,8 @@ useHead({
     `body { background: ${settings.value.pageBackgroundColor} }`,
   ]),
 })
+
+useConfigureI18n()
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
