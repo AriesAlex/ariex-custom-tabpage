@@ -1,3 +1,5 @@
+import { ComposerTranslation } from '@nuxtjs/i18n/dist/runtime/composables'
+
 interface State {
   active: boolean
   initialSettings: Settings
@@ -26,9 +28,7 @@ export const useConfirmPopupStore = defineStore('confirmPopup', {
     settings: initialSettings,
   }),
   actions: {
-    show(settings: Partial<Settings>) {
-      const { t } = useI18n()
-
+    show(settings: Partial<Settings>, t: ComposerTranslation) {
       this.resetSettings()
       this.settings = {
         ...initialSettings,

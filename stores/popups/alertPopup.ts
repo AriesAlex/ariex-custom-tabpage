@@ -1,3 +1,5 @@
+import { ComposerTranslation } from '@nuxtjs/i18n/dist/runtime/composables'
+
 interface State {
   active: boolean
   initialSettings: Settings
@@ -20,9 +22,7 @@ export const useAlertPopupStore = defineStore('alertPopup', {
     settings: initialSettings,
   }),
   actions: {
-    show(settings: Settings) {
-      const { t } = useI18n()
-
+    show(settings: Settings, t: ComposerTranslation) {
       this.resetSettings()
       this.settings = { ...initialSettings, title: t('attention'), ...settings }
       this.active = true

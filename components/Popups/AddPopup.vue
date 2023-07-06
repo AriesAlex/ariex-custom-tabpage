@@ -59,9 +59,12 @@ function add() {
   hide()
   $fetch('/api/links/add', { method: 'POST', body: settings.value.link })
     .catch(err => {
-      alertPopupStore.show({
-        content: err.data.message,
-      })
+      alertPopupStore.show(
+        {
+          content: err.data.message,
+        },
+        t
+      )
     })
     .finally(() => linkStore.loadLinks())
 }
@@ -97,9 +100,12 @@ function upload() {
   const file = fileRef.value.files[0]
 
   if (file.size / 1024 > 500)
-    return alertPopupStore.show({
-      content: t('fileLimitExceed'),
-    })
+    return alertPopupStore.show(
+      {
+        content: t('fileLimitExceed'),
+      },
+      t
+    )
 
   var reader = new FileReader()
   reader.readAsDataURL(file)

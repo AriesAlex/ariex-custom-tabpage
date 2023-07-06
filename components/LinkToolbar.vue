@@ -85,17 +85,20 @@ const actions = [
     class: 'red',
     icon: Close,
     func: async () => {
-      confirmPopupStore.show({
-        content: t('deleteLinkConfirm', [link.value!.title]),
-        confirm: async () => {
-          close()
-          await $fetch('/api/links/delete', {
-            method: 'POST',
-            body: link.value,
-          })
-          await linkStore.loadLinks()
+      confirmPopupStore.show(
+        {
+          content: t('deleteLinkConfirm', [link.value!.title]),
+          confirm: async () => {
+            close()
+            await $fetch('/api/links/delete', {
+              method: 'POST',
+              body: link.value,
+            })
+            await linkStore.loadLinks()
+          },
         },
-      })
+        t
+      )
     },
   },
   {
