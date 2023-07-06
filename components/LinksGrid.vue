@@ -56,7 +56,10 @@ const columnsCount = ref(0)
 const spacePerLinks = ref(0)
 const currentLink = ref<Link | null>(null)
 
-const addLink: Link = { title: t('newLink'), meta: 'add' }
+const addLink: ComputedRef<Link> = computed(() => ({
+  title: t('newLink'),
+  meta: 'add',
+}))
 
 const root = ref<InstanceType<typeof HTMLElement> | null>(null)
 
