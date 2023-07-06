@@ -1,8 +1,8 @@
 <template>
-  <el-select v-model="wallpaperType" placeholder="Тип фона">
-    <el-option label="Видео" value="video" />
-    <el-option label="Картинка" value="image" />
-    <el-option label="Цвет" value="color" />
+  <el-select v-model="wallpaperType" :placeholder="$t('wallpaperType')">
+    <el-option :label="$t('video')" value="video" />
+    <el-option :label="$t('picture')" value="image" />
+    <el-option :label="$t('color')" value="color" />
   </el-select>
 
   <div class="uploader" v-if="['video', 'image'].includes(wallpaperType!)">
@@ -13,7 +13,10 @@
   </div>
 
   <div v-if="wallpaperType == 'color'" class="color-settings">
-    <SettingsExtendedColorPicker v-model="wallpaperSrc" title="Выберите цвет" />
+    <SettingsExtendedColorPicker
+      v-model="wallpaperSrc"
+      :title="$t('chooseColor')"
+    />
   </div>
 </template>
 

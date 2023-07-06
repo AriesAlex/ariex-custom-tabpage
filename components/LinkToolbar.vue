@@ -30,6 +30,7 @@ import { useLinksStore } from '@/stores/links'
 import { useConfirmPopupStore } from '~/stores/popups/confirmPopup'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { ArrowLeft, Close, EditPen, ArrowRight } from '@element-plus/icons-vue'
+const { t } = useI18n()
 const props = defineProps<{ link: Link | null }>()
 const { link } = toRefs(props)
 const emit = defineEmits(['close'])
@@ -85,7 +86,7 @@ const actions = [
     icon: Close,
     func: async () => {
       confirmPopupStore.show({
-        content: `Вы уверены, что хотите удалить "${link.value!.title}"?`,
+        content: t('deleteLinkConfirm', [link.value!.title]),
         confirm: async () => {
           close()
           await $fetch('/api/links/delete', {

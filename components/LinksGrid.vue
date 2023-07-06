@@ -39,6 +39,7 @@ import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
 import Link from '@/interfaces/Link'
 import { useDebounceFn } from '@vueuse/shared'
+const { t } = useI18n()
 
 const emit = defineEmits(['recalculate', 'add'])
 
@@ -55,7 +56,7 @@ const columnsCount = ref(0)
 const spacePerLinks = ref(0)
 const currentLink = ref<Link | null>(null)
 
-const addLink: Link = { title: 'Новая ссылка', meta: 'add' }
+const addLink: Link = { title: t('newLink'), meta: 'add' }
 
 const root = ref<InstanceType<typeof HTMLElement> | null>(null)
 

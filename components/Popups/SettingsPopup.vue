@@ -1,6 +1,6 @@
 <template>
   <div id="settings-popup">
-    <PopupBase title="Настройки" :show="active" @close="close">
+    <PopupBase :title="$t('settings')" :show="active" @close="close">
       <el-tabs :tab-position="isFull ? 'left' : 'top'">
         <SettingsBackgroundTab />
         <SettingsDockPanelTab />
@@ -11,11 +11,13 @@
         <div class="left">
           <LanguageSelector />
           <ElButton type="danger" text @click="resetSettings">{{
-            isFull ? 'Сбросить настройки' : 'Сбросить'
+            isFull ? $t('resetSettings') : $t('reset')
           }}</ElButton>
         </div>
         <div class="right">
-          <ElButton type="primary" @click="applySettings">Применить</ElButton>
+          <ElButton type="primary" @click="applySettings">{{
+            $t('apply')
+          }}</ElButton>
         </div>
       </div>
     </PopupBase>

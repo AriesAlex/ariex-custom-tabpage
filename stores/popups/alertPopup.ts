@@ -9,8 +9,8 @@ interface Settings {
 }
 
 const initialSettings: Settings = {
-  title: 'Внимание',
   content: '',
+  title: '',
 }
 
 export const useAlertPopupStore = defineStore('alertPopup', {
@@ -21,8 +21,10 @@ export const useAlertPopupStore = defineStore('alertPopup', {
   }),
   actions: {
     show(settings: Settings) {
+      const { t } = useI18n()
+
       this.resetSettings()
-      this.settings = { ...initialSettings, ...settings }
+      this.settings = { ...initialSettings, title: t('attention'), ...settings }
       this.active = true
     },
     hide() {

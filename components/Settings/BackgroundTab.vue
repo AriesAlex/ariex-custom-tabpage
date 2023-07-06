@@ -1,5 +1,5 @@
 <template>
-  <el-tab-pane label="Фон" class="background-pane">
+  <el-tab-pane :label="$t('background')" class="background-pane">
     <el-card shadow="never">
       <SettingsBackgroundConfigurator :mobile="false" />
 
@@ -7,7 +7,7 @@
         <el-icon>
           <Platform />
         </el-icon>
-        <div>Десктопная версия</div>
+        <div>{{ $t('desktopVersion') }}</div>
       </template>
     </el-card>
     <el-card shadow="never">
@@ -17,12 +17,12 @@
         <el-icon>
           <Iphone />
         </el-icon>
-        <div>Мобильная версия</div>
+        <div>{{ $t('mobileVersion') }}</div>
       </template>
     </el-card>
     <el-switch
       v-model="settings.wallpaperDarkening"
-      active-text="Затемнение фона"
+      :active-text="$t('wallpaperDarkening')"
     />
   </el-tab-pane>
 </template>
@@ -34,8 +34,6 @@ import { Iphone, Platform } from '@element-plus/icons-vue'
 
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
-
-const isFull = useIsFull()
 
 watch(
   () => settings.value?.wallpaperType,

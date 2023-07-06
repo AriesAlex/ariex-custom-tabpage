@@ -13,10 +13,10 @@ interface Settings {
 }
 
 const initialSettings: Settings = {
-  title: 'Подтверждение',
   content: '',
-  confirmText: 'Да',
-  cancelText: 'Нет',
+  title: '',
+  confirmText: '',
+  cancelText: '',
 }
 
 export const useConfirmPopupStore = defineStore('confirmPopup', {
@@ -27,8 +27,18 @@ export const useConfirmPopupStore = defineStore('confirmPopup', {
   }),
   actions: {
     show(settings: Partial<Settings>) {
+      const { t } = useI18n()
+
       this.resetSettings()
-      this.settings = { ...initialSettings, ...settings }
+      this.settings = {
+        ...initialSettings,
+
+        title: t('confirm'),
+        confirmText: t('yes'),
+        cancelText: t('no'),
+
+        ...settings,
+      }
 
       this.settings.confirm = () => {
         this.hide()

@@ -1,16 +1,16 @@
 <template>
-  <el-tab-pane label="Док-панель" class="dockPanel-pane">
+  <el-tab-pane :label="$t('dockPanel')" class="dockPanel-pane">
     <el-card class="color-card" shadow="never">
       <SettingsExtendedColorPicker
         v-model="settings.dockPanelColor"
-        title="Выберите цвет панели"
+        :title="$t('chooseDockPanelColor')"
       />
     </el-card>
 
     <el-card class="color-card" shadow="never">
       <SettingsExtendedColorPicker
         v-model="settings.dockPanelTextColor"
-        title="Выберите цвет текста"
+        :title="$t('chooseDockPanelTextColor')"
         :show-hint="false"
       />
     </el-card>

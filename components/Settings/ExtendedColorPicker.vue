@@ -13,20 +13,15 @@
   <el-input
     :modelValue="modelValue"
     @update:modelValue="value => updateValue(value || '')"
-    placeholder="Или введите вручную"
+    :placeholder="$t('orEnterManually')"
     ref="inputEL"
   />
-  <div class="hint" v-if="showHint">
-    Поддерживаются css-свойства. Например
-    <a target="_blank" href="https://cssgradient.io">linear-gradient</a> и
-    <a target="_blank" href="https://developer.mozilla.org/ru/docs/Web/CSS/url"
-      >url</a
-    >
-  </div>
+  <div class="hint" v-if="showHint" v-html="hint" />
 </template>
 
 <script setup lang="ts">
 import { ElInput } from 'element-plus/es/components/input/index'
+const { t } = useI18n()
 
 withDefaults(
   defineProps<{
@@ -40,6 +35,21 @@ withDefaults(
 const emit = defineEmits(['update:modelValue'])
 
 const inputEL = ref<InstanceType<typeof ElInput> | null>(null)
+
+const hint = computed(() =>
+  t('colorPickerCssPropsHint', [
+    `<a
+    target="_blank"
+    href="https://cssgradient.io"
+    >linear-gradient</a
+  >`,
+    `<a
+    target="_blank"
+    href="https://developer.mozilla.org/ru/docs/Web/CSS/url"
+    >url</a
+  >`,
+  ])
+)
 
 function updateValue(value: string) {
   if (value.startsWith('http')) {

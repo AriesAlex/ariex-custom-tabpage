@@ -1,7 +1,7 @@
 <template>
   <div id="add-popup" @keydown.enter="add" @keydown.esc="hide">
     <PopupBase
-      :title="settings.link.id ? 'Изменить ссылку' : 'Новая ссылка'"
+      :title="settings.link.id ? $t('editLink') : $t('newLink')"
       :show="active"
       @close="hide"
     >
@@ -9,10 +9,10 @@
         class="input"
         v-model="settings.link.title"
         ref="titleInputRef"
-        placeholder="Заголовок"
+        :placeholder="$t('title')"
       />
       <ElInput
-        placeholder="Ссылка"
+        :placeholder="$t('link')"
         v-model="settings.link.url"
         class="input"
         @input="fetchIcon"
@@ -31,7 +31,7 @@
       </div>
 
       <ElButton type="primary" class="button" @click="add">{{
-        settings.link.id ? 'Изменить' : 'Добавить'
+        settings.link.id ? $t('edit') : $t('add')
       }}</ElButton>
     </PopupBase>
   </div>
@@ -44,6 +44,7 @@ import { useAddPopupStore, DEFAULT_ICON } from '~/stores/popups/addPopup'
 import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 import { useLinksStore } from '@/stores/links'
 import { ElInput as ElInputComponent } from 'element-plus'
+const { t } = useI18n()
 
 const alertPopupStore = useAlertPopupStore()
 const addPopupStore = useAddPopupStore()
@@ -97,7 +98,7 @@ function upload() {
 
   if (file.size / 1024 > 500)
     return alertPopupStore.show({
-      content: 'Максимальный размер файла - 500кб',
+      content: t('fileLimitExceed'),
     })
 
   var reader = new FileReader()

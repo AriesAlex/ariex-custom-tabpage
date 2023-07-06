@@ -1,10 +1,10 @@
 <template>
-  <el-tab-pane label="Страница" class="dockPanel-pane">
+  <el-tab-pane :label="$t('page')" class="dockPanel-pane">
     <el-card class="color-card" shadow="never">
       <SettingsExtendedColorPicker
         v-model="settings.pageBackgroundColor"
-        title="Выберите цвет фона страницы"
-        description="При заходе на сайт фон не сразу загружается, поэтому можно дополнительно задать фон страницы во время загрузки"
+        :title="$t('choosePageBackgroundColor')"
+        :description="$t('pageBackgroundColorHint')"
       />
     </el-card>
   </el-tab-pane>
