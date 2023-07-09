@@ -31,5 +31,10 @@
   "reset": "Reset",
   "resetSettings": "Reset settings",
   "add": "Add",
-  "edit": "Change"
+  "edit": "Change",
+  "specifyTitleAndLink": "Provide a title and link",
+  "noLinkWithSuchId": "Link with this id does not exist",
+  "newTab": "New tab",
+  "specifyLinkId": "Specify link id",
+  "specifyOffset": "Specify Offset"
 }

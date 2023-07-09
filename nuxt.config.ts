@@ -1,10 +1,6 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import locales from './locales'
+
 export default defineNuxtConfig({
-  app: {
-    head: {
-      title: 'Новая вкладка',
-    },
-  },
   modules: ['@element-plus/nuxt', '@pinia/nuxt', '@nuxtjs/i18n'],
   components: ['~/components', '~/components/Popups'],
   pinia: {
@@ -19,16 +15,7 @@ export default defineNuxtConfig({
   },
   i18n: {
     langDir: 'locales',
-    locales: [
-      {
-        code: 'en',
-        name: 'English',
-      },
-      {
-        code: 'ru',
-        name: 'Русский',
-      },
-    ].map(lang => ({ ...lang, file: lang.code + '.json' })),
+    locales,
     defaultLocale: 'en',
     detectBrowserLanguage: false,
     strategy: 'no_prefix',

@@ -39,14 +39,6 @@ const settingsStore = useSettingsStore()
 settingsStore.loadSettings()
 const { settings } = storeToRefs(settingsStore)
 
-useHead({
-  style: computed(() => [
-    `body { background: ${settings.value.pageBackgroundColor} }`,
-  ]),
-})
-
-useConfigureI18n()
-
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
 const isFull = useIsFull()
@@ -107,6 +99,16 @@ if (useCookie('lastInitialOffset').value)
 function openPopup() {
   addPopupStore.show()
 }
+
+const { t } = useI18n()
+await useConfigureI18n()
+
+useHead({
+  title: computed(() => t('newTab')),
+  style: computed(() => [
+    `body { background: ${settings.value.pageBackgroundColor} }`,
+  ]),
+})
 </script>
 
 <style lang="scss" scoped>

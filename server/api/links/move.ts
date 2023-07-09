@@ -1,4 +1,4 @@
-import { linksStorage } from '../lib/storages'
+import { linksStorage } from '../../lib/storages'
 import { arrayMoveMutable } from 'array-move'
 
 export default defineEventHandler(async e => {
@@ -9,12 +9,12 @@ export default defineEventHandler(async e => {
   if (id == null)
     throw createError({
       statusCode: 400,
-      message: `Укажите id ссылки`,
+      message: e.context.$t('specifyLinkId'),
     })
   if (typeof offset != 'number')
     throw createError({
       statusCode: 400,
-      message: `Укажите смещение`,
+      message: e.context.$t('specifyOffset'),
     })
 
   const index = linksStorage.value.value.findIndex(l => l.id == id)

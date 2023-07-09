@@ -1,4 +1,4 @@
-import { linksStorage } from '../lib/storages'
+import { linksStorage } from '../../lib/storages'
 import { v4 } from 'uuid'
 
 export default defineEventHandler(async e => {
@@ -7,7 +7,7 @@ export default defineEventHandler(async e => {
   if (!link?.title || !link?.url)
     throw createError({
       statusCode: 400,
-      message: `Укажите заголовок и ссылку`,
+      message: e.context.$t('specifyTitleAndLink'),
     })
 
   if (!link.url.startsWith('http')) link.url = 'https://' + link.url
@@ -20,7 +20,7 @@ export default defineEventHandler(async e => {
     if (!alreadyExistingLink) {
       throw createError({
         statusCode: 400,
-        message: `Ссылки с таким id не существует`,
+        message: e.context.$t('noLinkWithSuchId'),
       })
     }
     linksStorage.value.value[alreadyExistingLink] = link
