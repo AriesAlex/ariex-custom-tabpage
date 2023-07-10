@@ -4,8 +4,7 @@ import crypto from 'crypto'
 import { IncomingMessage } from 'http'
 import { H3Event } from 'h3'
 
-const isDev = process.env.NODE_ENV == 'development'
-const publicDir = `${isDev ? '' : '.output/'}public`
+const publicDir = `${process.dev ? '' : '.output/'}public`
 
 export default async (e: H3Event, filename: string) => {
   const files = (await getFiles(e.node.req)) as any

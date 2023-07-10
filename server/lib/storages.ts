@@ -40,7 +40,10 @@ class Storage<T> {
   }
 }
 
-export const settingsStorage = new Storage<Settings>('settings.json', getDefaultSettings())
+export const settingsStorage = new Storage<Settings>(
+  'settings.json',
+  getDefaultSettings()
+)
 
 export const linksStorage = new Storage<Link[]>('links.json', [])
 linksStorage.value.value

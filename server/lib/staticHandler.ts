@@ -3,8 +3,7 @@ import crypto from 'crypto'
 import { H3Event } from 'h3'
 import { contentType } from 'mime-types'
 
-const isDev = process.env.NODE_ENV === 'development'
-const publicDir = `${isDev ? '' : '.output/'}public`
+const publicDir = `${process.dev ? '' : '.output/'}public`
 
 export default async (e: H3Event, filename: string) => {
   const file = await fs.readFile(`${publicDir}/${filename}`)
@@ -22,10 +21,7 @@ export default async (e: H3Event, filename: string) => {
     return
   }
 
-  res.setHeader(
-    'Cache-Control',
-    `no-cache`
-  )
+  res.setHeader('Cache-Control', `no-cache`)
   res.setHeader('Content-Type', contentType(filename) || 'video/mp4')
   res.setHeader('Last-Modified', lastModified)
   res.setHeader('ETag', hash)
