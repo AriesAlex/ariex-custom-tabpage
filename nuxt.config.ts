@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     inlineSSRStyles: false,
   },
   i18n: {
+    lazy: true,
     langDir: 'locales',
     locales,
     defaultLocale: 'en',

@@ -6,18 +6,18 @@
     size="small"
   >
     <el-option
-      v-for="item in (locales as LocaleObject[])"
-      :key="item.code"
-      :label="item.name"
-      :value="item.code"
+      v-for="locale in locales"
+      :key="locale.code"
+      :label="locale.name"
+      :value="locale.code"
     />
     <template v-slot:prefix>🌍</template>
   </el-select>
 </template>
 
 <script setup lang="ts">
-import { LocaleObject } from '@nuxtjs/i18n/dist/runtime/composables'
-const { locale, locales } = useI18n()
+import locales from '@/locales'
+const { locale } = useI18n()
 </script>
 
 <style lang="scss">

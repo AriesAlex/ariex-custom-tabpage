@@ -1,6 +1,5 @@
 {
   "name": "ariex-custom-tabpage",
-  "type": "module",
   "version": "1.5.0",
   "scripts": {
     "init": "npm i && npm run build && npm run start",
