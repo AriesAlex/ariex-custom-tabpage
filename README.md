@@ -1,14 +1,14 @@
 # ArieX Custom Tabpage
 
 <p align="center">
-  <img src="docs/images/1.gif" height="450">
-  <img src="docs/images/1.jpg" height="450">
-  <img src="docs/images/2.jpg" height="450">
-  <img src="docs/images/3.jpg" height="450">
-  <img src="docs/images/4.jpg" height="450">
-  <img src="docs/images/5.jpg" height="450">
-  <img src="docs/images/2.gif" height="450">
-  <img src="docs/images/3.gif" height="450">
+  <img src="docs/images/1.gif" height="50%">
+  <img src="docs/images/1.jpg" height="50%">
+  <img src="docs/images/2.jpg" height="50%">
+  <img src="docs/images/3.jpg" height="50%">
+  <img src="docs/images/4.jpg" height="50%">
+  <img src="docs/images/5.jpg" height="50%">
+  <img src="docs/images/2.gif" height="50%">
+  <img src="docs/images/3.gif" height="50%">
 </p>
 
 **Why?**
