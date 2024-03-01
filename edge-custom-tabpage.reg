@@ -12,5 +12,5 @@ Windows Registry Editor Version 5.00
 "SslClientCertReference"="MY;User;0000000000000000000000000000000000000000"
 "ProtoVer"="1.2"
 
-[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge\Recommended]
+[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Edge]
 "NewTabPageLocation"="http://192.168.0.100:4554"
