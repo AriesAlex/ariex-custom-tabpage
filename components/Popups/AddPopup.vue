@@ -85,7 +85,7 @@ function fetchIcon() {
       : 'https://' + settings.value.link.url
 
     const iconData = await $fetch<string>(
-      `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${url}&size=32`,
+      `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=32`,
       {
         responseType: 'arrayBuffer',
       }
