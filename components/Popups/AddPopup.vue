@@ -84,13 +84,9 @@ function fetchIcon() {
       ? settings.value.link.url
       : 'https://' + settings.value.link.url
 
-    const iconData = await $fetch<string>(
-      `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${url}&size=32`,
-      {
-        responseType: 'arrayBuffer',
-      }
-    )
-    settings.value.link.icon = await resizeImage(iconData, 64, 64)
+    const iconData = await useFetch<string>(`/api/favicon?url=${url}`).data
+      .value
+    if (iconData) settings.value.link.icon = await resizeImage(iconData, 64, 64)
   }, 500)
 }
 
@@ -132,9 +128,7 @@ function resizeImage(imgData: string, width: number, height: number) {
       ctx!.drawImage(this as CanvasImageSource, 0, 0, width, height)
       resolve(canvas.toDataURL())
     }
-    img.src =
-      'data:image/png;base64,' +
-      Buffer.from(imgData, 'binary').toString('base64')
+    img.src = 'data:image/png;base64,' + imgData
   })
 }
 
