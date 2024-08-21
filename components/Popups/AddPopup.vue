@@ -83,10 +83,9 @@ function fetchIcon() {
     const url = settings.value.link.url.startsWith('http')
       ? settings.value.link.url
       : 'https://' + settings.value.link.url
-    const urlHostname = new URL(url).hostname
 
     const iconData = await $fetch<string>(
-      'https://icon.horse/icon/' + urlHostname,
+      `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=https://${url}&size=32`,
       {
         responseType: 'arrayBuffer',
       }
