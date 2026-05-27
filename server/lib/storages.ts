@@ -19,24 +19,42 @@ class Storage<T> {
     this.defaultValue = defaultValue
 
     if (!fs.existsSync(filename))
-      fs.writeJSONSync(this.filename, defaultValue, { spaces: 2 })
-    this.value = ref(fs.readJSONSync(filename))
+      this.write(defaultValue)
+    this.value = ref(this.read())
 
     this.valueWatcher = watch(
       this.value,
       () => {
-        fs.writeJSONSync(this.filename, this.value.value, { spaces: 2 })
+        this.write(this.value.value)
       },
       { deep: true }
     )
 
     this.fileWatcher = fs.watchFile(this.filename, () => {
       try {
-        this.value.value = fs.readJSONSync(this.filename)
+        this.value.value = this.read()
       } catch (e) {}
     })
 
     this.value.value = mergeObjects([this.defaultValue, this.value.value])
+  }
+
+  read() {
+    return fs.readJSONSync(this.filename)
+  }
+
+  write(value: T) {
+    const json = `${JSON.stringify(value, null, 2)}\n`
+    fs.ensureFileSync(this.filename)
+
+    const fd = fs.openSync(this.filename, 'r+')
+    try {
+      fs.writeFileSync(fd, json)
+      fs.ftruncateSync(fd, Buffer.byteLength(json))
+      fs.fsyncSync(fd)
+    } finally {
+      fs.closeSync(fd)
+    }
   }
 }
 

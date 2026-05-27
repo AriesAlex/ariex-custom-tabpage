@@ -54,6 +54,7 @@ const { hide } = addPopupStore
 
 const titleInputRef = ref<InstanceType<typeof ElInputComponent> | null>(null)
 const fileRef = ref<InstanceType<typeof HTMLInputElement> | null>(null)
+let iconRequestId = 0
 
 function add() {
   hide()
@@ -80,13 +81,18 @@ function fetchIcon() {
   settings.value.getIconTimer = setTimeout(async () => {
     if (!settings.value.link.url) return
 
+    const requestId = ++iconRequestId
     const url = settings.value.link.url.startsWith('http')
       ? settings.value.link.url
       : 'https://' + settings.value.link.url
 
-    const iconData = await useFetch<string>(`/api/favicon?url=${url}`).data
-      .value
-    if (iconData) settings.value.link.icon = await resizeImage(iconData, 64, 64)
+    const iconData = await $fetch<string>('/api/favicon', {
+      query: { url },
+    }).catch(() => null)
+    if (!iconData || requestId !== iconRequestId) return
+
+    const icon = await resizeImage(iconData, 64, 64)
+    if (requestId === iconRequestId) settings.value.link.icon = icon
   }, 500)
 }
 

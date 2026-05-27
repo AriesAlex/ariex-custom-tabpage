@@ -17,7 +17,7 @@ export default defineEventHandler(async e => {
     const alreadyExistingLink = linksStorage.value.value.findIndex(
       l => l.id == link.id
     )
-    if (!alreadyExistingLink) {
+    if (alreadyExistingLink === -1) {
       throw createError({
         statusCode: 400,
         message: e.context.$t('noLinkWithSuchId'),
