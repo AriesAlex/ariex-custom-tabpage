@@ -1,11 +1,11 @@
 <template>
   <div class="popup-base" :class="{ show }" v-if="serverShow">
-    <div class="blackout" @click="close" />
+    <div class="blackout" @click="closable && close()" />
 
     <div class="popup">
       <div class="header">
         <div class="title oneline">{{ title }}</div>
-        <div class="close" @click="close">
+        <div class="close" v-if="closable" @click="close">
           <ElIcon>
             <Close />
           </ElIcon>
@@ -21,8 +21,11 @@
 
 <script setup lang="ts">
 import { Close } from '@element-plus/icons-vue'
-const props = defineProps<{ show: boolean; title: string }>()
-const { show, title } = toRefs(props)
+const props = withDefaults(
+  defineProps<{ show: boolean; title: string; closable?: boolean }>(),
+  { closable: true }
+)
+const { show, title, closable } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const serverShow = ref(false)

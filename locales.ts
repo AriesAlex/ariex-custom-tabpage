@@ -1,10 +1,16 @@
-export default [
+export type LocaleCode = 'en' | 'ru'
+
+const locales: { code: LocaleCode; name: string; file: string }[] = [
   {
     code: 'en',
     name: 'English',
+    file: 'en.json',
   },
   {
     code: 'ru',
     name: 'Русский',
+    file: 'ru.json',
   },
-].map(lang => ({ file: lang.code + '.json', ...lang }))
+]
+
+export default locales

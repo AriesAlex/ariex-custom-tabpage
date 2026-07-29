@@ -30,7 +30,12 @@
         </div>
       </div>
 
-      <ElButton type="primary" class="button" @click="add">{{
+      <ElButton
+        type="primary"
+        class="button"
+        :loading="loading"
+        @click="add"
+      >{{
         settings.link.id ? $t('edit') : $t('add')
       }}</ElButton>
     </PopupBase>
@@ -44,6 +49,7 @@ import { useAddPopupStore, DEFAULT_ICON } from '~/stores/popups/addPopup'
 import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 import { useLinksStore } from '@/stores/links'
 import { ElInput as ElInputComponent } from 'element-plus'
+import { getRequestErrorMessage } from '~/utils/requestError'
 const { t } = useI18n()
 
 const alertPopupStore = useAlertPopupStore()
@@ -55,19 +61,26 @@ const { hide } = addPopupStore
 const titleInputRef = ref<InstanceType<typeof ElInputComponent> | null>(null)
 const fileRef = ref<InstanceType<typeof HTMLInputElement> | null>(null)
 let iconRequestId = 0
+const loading = ref(false)
 
-function add() {
-  hide()
-  $fetch('/api/links/add', { method: 'POST', body: settings.value.link })
-    .catch(err => {
-      alertPopupStore.show(
-        {
-          content: err.data.message,
-        },
-        t
-      )
+async function add() {
+  if (loading.value) return
+  loading.value = true
+  try {
+    await $fetch('/api/links/add', {
+      method: 'POST',
+      body: settings.value.link,
     })
-    .finally(() => linkStore.loadLinks())
+    await linkStore.loadLinks()
+    hide()
+  } catch (error) {
+    alertPopupStore.show(
+      { content: getRequestErrorMessage(error, t('unexpectedError')) },
+      t
+    )
+  } finally {
+    loading.value = false
+  }
 }
 
 function fetchIcon() {
@@ -108,7 +121,7 @@ function upload() {
       t
     )
 
-  var reader = new FileReader()
+  const reader = new FileReader()
   reader.readAsDataURL(file)
   reader.onload = () => {
     if (reader.result != null) {
@@ -138,7 +151,7 @@ function resizeImage(imgData: string, width: number, height: number) {
   })
 }
 
-watch(active, active => {
+watch(active, (active: boolean) => {
   if (active) titleInputRef.value?.input?.focus()
 })
 </script>

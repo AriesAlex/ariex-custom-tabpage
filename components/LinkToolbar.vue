@@ -23,25 +23,28 @@
 </template>
 
 <script setup lang="ts">
-import Link from '@/interfaces/Link'
+import type Link from '@/interfaces/Link'
 import { arrayMoveMutable } from 'array-move'
 import { storeToRefs } from 'pinia'
 import { useLinksStore } from '@/stores/links'
 import { useConfirmPopupStore } from '~/stores/popups/confirmPopup'
 import { useAddPopupStore } from '~/stores/popups/addPopup'
+import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 import { ArrowLeft, Close, EditPen, ArrowRight } from '@element-plus/icons-vue'
+import { getRequestErrorMessage } from '~/utils/requestError'
 const { t } = useI18n()
 const props = defineProps<{ link: Link | null }>()
 const { link } = toRefs(props)
 const emit = defineEmits(['close'])
 
 const confirmPopupStore = useConfirmPopupStore()
+const alertPopupStore = useAlertPopupStore()
 const addPopupStore = useAddPopupStore()
 const linkStore = useLinksStore()
 const { links } = storeToRefs(linkStore)
 
 const moveOffset = ref(0)
-const moveTimer = ref<NodeJS.Timer | null>(null)
+const moveTimer = ref<ReturnType<typeof setTimeout> | null>(null)
 
 function close() {
   if (moveTimer.value) return
@@ -53,22 +56,29 @@ function move(direction: 'left' | 'right') {
   const index = links.value.findIndex(l => l.id == link.value?.id)
   arrayMoveMutable(links.value, index, index + directionOffset)
 
-  if (moveTimer) {
-    clearInterval(moveTimer.value!)
+  if (moveTimer.value) {
+    clearTimeout(moveTimer.value)
     moveTimer.value = null
   }
-  moveTimer.value = setInterval(() => {
-    clearInterval(moveTimer.value!)
+  moveTimer.value = setTimeout(async () => {
     moveTimer.value = null
 
     if (!moveOffset.value) return
-
-    $fetch('/api/links/move', {
-      method: 'POST',
-      body: { ...link.value, offset: moveOffset.value },
-    }).then(() => {
-      moveOffset.value = 0
-    })
+    const offset = moveOffset.value
+    moveOffset.value = 0
+    try {
+      await $fetch('/api/links/move', {
+        method: 'POST',
+        body: { id: link.value?.id, offset },
+      })
+    } catch (error) {
+      alertPopupStore.show(
+        { content: getRequestErrorMessage(error, t('unexpectedError')) },
+        t
+      )
+    } finally {
+      await linkStore.loadLinks()
+    }
   }, 500)
 }
 
@@ -76,9 +86,7 @@ const actions = [
   {
     id: 'left',
     icon: ArrowLeft,
-    func: async () => {
-      move('left')
-    },
+    func: () => move('left'),
   },
   {
     id: 'delete',
@@ -90,11 +98,20 @@ const actions = [
           content: t('deleteLinkConfirm', [link.value!.title]),
           confirm: async () => {
             close()
-            await $fetch('/api/links/delete', {
-              method: 'POST',
-              body: link.value,
-            })
-            await linkStore.loadLinks()
+            try {
+              await $fetch('/api/links/delete', {
+                method: 'POST',
+                body: { id: link.value?.id },
+              })
+              await linkStore.loadLinks()
+            } catch (error) {
+              alertPopupStore.show(
+                {
+                  content: getRequestErrorMessage(error, t('unexpectedError')),
+                },
+                t
+              )
+            }
           },
         },
         t
@@ -104,7 +121,7 @@ const actions = [
   {
     id: 'edit',
     icon: EditPen,
-    func: async () => {
+    func: () => {
       close()
       addPopupStore.show({ ...link.value! })
     },
@@ -112,9 +129,7 @@ const actions = [
   {
     id: 'right',
     icon: ArrowRight,
-    func: async () => {
-      move('right')
-    },
+    func: () => move('right'),
   },
 ]
 </script>

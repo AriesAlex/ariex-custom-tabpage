@@ -1,24 +1,22 @@
-import { linksStorage } from '../../lib/storages'
-import { arrayMoveMutable } from 'array-move'
+import { getDataOwnerId } from '../../lib/auth'
+import { parseLinkId, parseLinkOffset } from '../../lib/linkValidation'
+import { moveLink } from '../../lib/userData'
 
 export default defineEventHandler(async e => {
   const body = await readBody(e)
-  const id = body?.id
-  const offset = body?.offset
+  const id = parseLinkId(e, body?.id)
+  const offset = parseLinkOffset(e, body?.offset)
 
-  if (id == null)
+  const moved = await moveLink(
+    await getDataOwnerId(e),
+    id,
+    offset
+  )
+  if (!moved)
     throw createError({
       statusCode: 400,
-      message: e.context.$t('specifyLinkId'),
+      message: e.context.$t('noLinkWithSuchId'),
     })
-  if (typeof offset != 'number')
-    throw createError({
-      statusCode: 400,
-      message: e.context.$t('specifyOffset'),
-    })
-
-  const index = linksStorage.value.value.findIndex(l => l.id == id)
-  arrayMoveMutable(linksStorage.value.value, index, index + offset)
 
   return 'ok'
 })

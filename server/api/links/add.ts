@@ -1,30 +1,16 @@
-import { linksStorage } from '../../lib/storages'
-import { v4 } from 'uuid'
+import { getDataOwnerId } from '../../lib/auth'
+import { parseLink } from '../../lib/linkValidation'
+import { saveLink } from '../../lib/userData'
 
 export default defineEventHandler(async e => {
-  const link = await readBody(e)
+  const link = parseLink(e, await readBody(e))
 
-  if (!link?.title || !link?.url)
+  const saved = await saveLink(await getDataOwnerId(e), link)
+  if (!saved)
     throw createError({
       statusCode: 400,
-      message: e.context.$t('specifyTitleAndLink'),
+      message: e.context.$t('noLinkWithSuchId'),
     })
-
-  if (!link.url.startsWith('http')) link.url = 'https://' + link.url
-  if (!link.icon) link.icon = null
-
-  if (link.id) {
-    const alreadyExistingLink = linksStorage.value.value.findIndex(
-      l => l.id == link.id
-    )
-    if (alreadyExistingLink === -1) {
-      throw createError({
-        statusCode: 400,
-        message: e.context.$t('noLinkWithSuchId'),
-      })
-    }
-    linksStorage.value.value[alreadyExistingLink] = link
-  } else linksStorage.value.value.push({ ...link, id: v4() })
 
   return 'ok'
 })

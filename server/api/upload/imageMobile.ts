@@ -1,5 +1,6 @@
-import uploadHandler from '../../lib/uploadHandler'
+import { getDataOwnerId } from '../../lib/auth'
+import { uploadMedia } from '../../lib/media'
 
 export default defineEventHandler(
-  async e => await uploadHandler(e, 'image_mobile.jpg')
+  async e => uploadMedia(e, await getDataOwnerId(e), 'imageMobile')
 )

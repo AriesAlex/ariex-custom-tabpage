@@ -1,17 +1,17 @@
-import { ComposerTranslation } from '@nuxtjs/i18n/dist/runtime/composables'
-
 interface State {
   active: boolean
-  initialSettings: Settings
   settings: Settings
 }
 interface Settings {
   title: string
   content: string
-  confirm?: Function
-  cancel?: Function
   confirmText?: string
   cancelText?: string
+}
+
+interface PopupOptions extends Partial<Settings> {
+  confirm?: () => void
+  cancel?: () => void
 }
 
 const initialSettings: Settings = {
@@ -21,15 +21,17 @@ const initialSettings: Settings = {
   cancelText: '',
 }
 
+let confirmAction: (() => void) | undefined
+let cancelAction: (() => void) | undefined
+
 export const useConfirmPopupStore = defineStore('confirmPopup', {
   state: (): State => ({
     active: false,
-    initialSettings,
-    settings: initialSettings,
+    settings: structuredClone(initialSettings),
   }),
   actions: {
-    show(settings: Partial<Settings>, t: ComposerTranslation) {
-      this.resetSettings()
+    show(options: PopupOptions, t: (key: string) => string) {
+      const { confirm, cancel, ...settings } = options
       this.settings = {
         ...initialSettings,
 
@@ -39,23 +41,24 @@ export const useConfirmPopupStore = defineStore('confirmPopup', {
 
         ...settings,
       }
-
-      this.settings.confirm = () => {
-        this.hide()
-        if (settings.confirm) settings.confirm()
-      }
-      this.settings.cancel = () => {
-        this.hide()
-        if (settings.cancel) settings.cancel()
-      }
-
+      confirmAction = confirm
+      cancelAction = cancel
       this.active = true
+    },
+    confirm() {
+      const action = confirmAction
+      this.hide()
+      action?.()
+    },
+    cancel() {
+      const action = cancelAction
+      this.hide()
+      action?.()
     },
     hide() {
       this.active = false
-    },
-    resetSettings() {
-      this.settings = structuredClone(initialSettings)
+      confirmAction = undefined
+      cancelAction = undefined
     },
   },
 })

@@ -1,5 +1,4 @@
-import structuredClone from '@ungap/structured-clone'
-import Settings from '~/interfaces/Settings'
+import type Settings from '~/interfaces/Settings'
 
 const defaultSettings: Settings = {
   wallpaperType: 'video',
@@ -11,5 +10,5 @@ const defaultSettings: Settings = {
   dockPanelTextColor: '#000',
   pageBackgroundColor: '#fff',
 }
-const getDefaultSettings = () => structuredClone(defaultSettings)
+const getDefaultSettings = (): Settings => ({ ...defaultSettings })
 export default getDefaultSettings

@@ -1,5 +1,6 @@
-import { settingsStorage } from '../../lib/storages'
+import { getDataOwnerId } from '../../lib/auth'
+import { getSettings } from '../../lib/userData'
 
-export default defineEventHandler(e => {
-  return settingsStorage.value.value
+export default defineEventHandler(async e => {
+  return getSettings(await getDataOwnerId(e))
 })

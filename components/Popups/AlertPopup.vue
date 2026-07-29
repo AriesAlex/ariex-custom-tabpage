@@ -1,7 +1,7 @@
 <template>
   <div id="alert-popup">
     <PopupBase :title="settings.title!" :show="active" @close="hide">
-      <div v-html="formattedContent" />
+      <div class="alert-content">{{ settings.content }}</div>
     </PopupBase>
   </div>
 </template>
@@ -13,12 +13,10 @@ import { useAlertPopupStore } from '~/stores/popups/alertPopup'
 const alertPopupStore = useAlertPopupStore()
 const { active, settings } = storeToRefs(alertPopupStore)
 const { hide } = alertPopupStore
-
-const formattedContent = computed(() =>
-  settings.value.content
-    .replace(/\r\n/g, '<br>')
-    .replace(/\r\n/g, '<br>')
-    .replace(/\n/g, '<br>')
-    .replace(/\r/g, '<br>')
-)
 </script>
+
+<style scoped>
+.alert-content {
+  white-space: pre-line;
+}
+</style>

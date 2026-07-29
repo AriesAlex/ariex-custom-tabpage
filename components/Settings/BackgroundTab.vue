@@ -31,43 +31,44 @@
 import { storeToRefs } from 'pinia'
 import { useSettingsStore } from '~/stores/settings'
 import { Iphone, Platform } from '@element-plus/icons-vue'
+import type { WallpaperType } from '~/interfaces/Settings'
 
 const settingsStore = useSettingsStore()
 const { settings } = storeToRefs(settingsStore)
 
 watch(
-  () => settings.value?.wallpaperType,
-  type => {
+  () => settings.value.wallpaperType,
+  (type: WallpaperType) => {
     switch (type) {
       case 'video': {
-        settings.value!.wallpaperSrc = '/api/static/video'
+        settings.value.wallpaperSrc = '/api/static/video'
         break
       }
       case 'image': {
-        settings.value!.wallpaperSrc = '/api/static/image'
+        settings.value.wallpaperSrc = '/api/static/image'
         break
       }
       case 'color': {
-        settings.value!.wallpaperSrc = '#222'
+        settings.value.wallpaperSrc = '#222'
         break
       }
     }
   }
 )
 watch(
-  () => settings.value?.mobileWallpaperType,
-  type => {
+  () => settings.value.mobileWallpaperType,
+  (type: WallpaperType) => {
     switch (type) {
       case 'video': {
-        settings.value!.mobileWallpaperSrc = '/api/static/video_mobile'
+        settings.value.mobileWallpaperSrc = '/api/static/video_mobile'
         break
       }
       case 'image': {
-        settings.value!.mobileWallpaperSrc = '/api/static/image_mobile'
+        settings.value.mobileWallpaperSrc = '/api/static/image_mobile'
         break
       }
       case 'color': {
-        settings.value!.mobileWallpaperSrc = '#222'
+        settings.value.mobileWallpaperSrc = '#222'
         break
       }
     }

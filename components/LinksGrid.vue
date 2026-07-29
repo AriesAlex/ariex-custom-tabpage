@@ -37,7 +37,7 @@ import { useLinksStore } from '@/stores/links'
 import { useSettingsStore } from '@/stores/settings'
 import { storeToRefs } from 'pinia'
 import { Plus } from '@element-plus/icons-vue'
-import Link from '@/interfaces/Link'
+import type Link from '@/interfaces/Link'
 import { useDebounceFn } from '@vueuse/shared'
 const { t } = useI18n()
 

@@ -1,5 +1,10 @@
 <template>
-  <div id="app" @touchstart="resetDragPos" @touchmove="dragOffset">
+  <div
+    id="app"
+    v-if="authStore.canUseApp"
+    @touchstart="resetDragPos"
+    @touchmove="dragOffset"
+  >
     <Background />
 
     <SettingsBtn :show="showSettingsBtn" />
@@ -13,6 +18,7 @@
     <ConfirmPopup />
     <AlertPopup />
   </div>
+  <AuthPopup v-else />
 </template>
 
 <script setup lang="ts">
@@ -23,6 +29,7 @@ import { useAddPopupStore } from '~/stores/popups/addPopup'
 import { useSettingsStore } from '@/stores/settings'
 import useConfigureI18n from '@/composables/useConfigureI18n'
 import { storeToRefs } from 'pinia'
+import { useAuthStore } from '~/stores/auth'
 
 const MIN_GRID_HEIGHT = 140
 
@@ -33,11 +40,13 @@ const lastDragPos = ref(0)
 const addPopupStore = useAddPopupStore()
 
 const linkStore = useLinksStore()
-linkStore.loadLinks()
-
 const settingsStore = useSettingsStore()
-settingsStore.loadSettings()
 const { settings } = storeToRefs(settingsStore)
+const authStore = useAuthStore()
+
+await authStore.loadSession()
+if (authStore.canUseApp)
+  await Promise.all([linkStore.loadLinks(), settingsStore.loadSettings()])
 
 const grid = ref<InstanceType<typeof LinksGrid> | null>(null)
 
@@ -103,12 +112,12 @@ function openPopup() {
 const { t } = useI18n()
 await useConfigureI18n()
 
-useHead({
-  title: computed(() => t('newTab')),
-  style: computed(() => [
-    `body { background: ${settings.value.pageBackgroundColor} }`,
-  ]),
-})
+useHead(() => ({
+  title: t('newTab'),
+  bodyAttrs: {
+    style: { background: settings.value.pageBackgroundColor },
+  },
+}))
 </script>
 
 <style lang="scss" scoped>

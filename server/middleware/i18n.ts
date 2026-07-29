@@ -1,13 +1,16 @@
 import { createI18n } from 'vue-i18n'
 import locales from '../../locales'
-import fs from 'fs-extra'
+import en from '../../locales/en.json'
+import ru from '../../locales/ru.json'
+
+const messages = { en, ru }
 
 const i18n = createI18n({
   fallbackLocale: 'en',
 }).global
 
 for (const locale of locales) {
-  i18n.setLocaleMessage(locale.code, fs.readJSONSync('locales/' + locale.file))
+  i18n.setLocaleMessage(locale.code, messages[locale.code])
 }
 
 export default defineEventHandler(e => {

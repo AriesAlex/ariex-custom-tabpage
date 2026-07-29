@@ -1,11 +1,17 @@
 <template>
   <div id="confirm-popup">
-    <PopupBase :title="settings.title" :show="active" @close="settings.cancel">
-      <div v-html="settings.content" />
+    <PopupBase
+      :title="settings.title"
+      :show="active"
+      @close="confirmPopupStore.cancel"
+    >
+      <div>{{ settings.content }}</div>
 
       <div class="buttons">
-        <ElButton @click="settings.cancel">{{ settings.cancelText }}</ElButton>
-        <ElButton @click="settings.confirm" type="primary">{{
+        <ElButton @click="confirmPopupStore.cancel">{{
+          settings.cancelText
+        }}</ElButton>
+        <ElButton @click="confirmPopupStore.confirm" type="primary">{{
           settings.confirmText
         }}</ElButton>
       </div>

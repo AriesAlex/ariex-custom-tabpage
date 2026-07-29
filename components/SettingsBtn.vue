@@ -1,13 +1,15 @@
 <template>
-  <div
+  <button
     class="settings-btn"
+    type="button"
+    :aria-label="$t('settings')"
     @click="settingsPopupStore.show()"
     :class="{ hide: !props.show }"
   >
     <ElIcon>
       <Setting />
     </ElIcon>
-  </div>
+  </button>
 </template>
 
 <script setup lang="ts">
@@ -23,6 +25,7 @@ const props = defineProps<{ show: boolean }>()
   right: 25px;
   top: 25px;
   background-color: white;
+  border: 0;
   border-radius: 8px;
   box-shadow: 0 1px 11px 1px rgb(0 0 0 / 20%);
   padding: 8px;

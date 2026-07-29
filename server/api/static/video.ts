@@ -1,5 +1,6 @@
-import staticHandler from '../../lib/staticHandler'
+import { getDataOwnerId } from '../../lib/auth'
+import { serveMedia } from '../../lib/media'
 
 export default defineEventHandler(
-  async e => await staticHandler(e, 'video.mp4')
+  async e => serveMedia(e, await getDataOwnerId(e), 'video')
 )

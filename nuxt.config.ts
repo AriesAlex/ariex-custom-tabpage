@@ -3,18 +3,15 @@ import locales from './locales'
 export default defineNuxtConfig({
   modules: ['@element-plus/nuxt', '@pinia/nuxt', '@nuxtjs/i18n'],
   components: ['~/components', '~/components/Popups'],
-  pinia: {
-    autoImports: [
-      // automatically imports `defineStore`
-      'defineStore', // import { defineStore } from 'pinia'
-      ['defineStore', 'definePiniaStore'], // import { defineStore as definePiniaStore } from 'pinia'
-    ],
-  },
-  experimental: {
-    inlineSSRStyles: false,
+  nitro: {
+    esbuild: {
+      options: {
+        target: 'es2022',
+      },
+    },
   },
   i18n: {
-    lazy: true,
+    restructureDir: '.',
     langDir: 'locales',
     locales,
     defaultLocale: 'en',

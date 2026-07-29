@@ -1,5 +1,6 @@
-import { linksStorage } from '../../lib/storages'
+import { getDataOwnerId } from '../../lib/auth'
+import { getLinks } from '../../lib/userData'
 
-export default defineEventHandler(e => {
-  return linksStorage.value.value
+export default defineEventHandler(async e => {
+  return getLinks(await getDataOwnerId(e))
 })

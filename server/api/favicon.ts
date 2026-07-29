@@ -1,11 +1,20 @@
+import { getDataOwnerId } from '../lib/auth'
+import { parseLinkUrl } from '../lib/linkValidation'
+
 export default defineEventHandler(async e => {
-  const url = getQuery(e).url
-  if (!url) return
-  const imgData = await $fetch<ArrayBuffer>(
-    `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(String(url))}&size=32`,
+  await getDataOwnerId(e)
+  const url = parseLinkUrl(e, getQuery(e).url)
+  const response = await $fetch.raw<ArrayBuffer>(
+    `https://t0.gstatic.com/faviconV2?client=SOCIAL&type=FAVICON&fallback_opts=TYPE,SIZE,URL&url=${encodeURIComponent(url)}&size=32`,
     {
+      ignoreResponseError: true,
       responseType: 'arrayBuffer',
     }
   )
-  return Buffer.from(imgData).toString('base64')
+  if (
+    !response._data ||
+    !response.headers.get('content-type')?.startsWith('image/')
+  )
+    throw createError({ statusCode: 502, message: 'Icon provider failed' })
+  return Buffer.from(response._data).toString('base64')
 })
