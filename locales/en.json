@@ -52,7 +52,7 @@
   "usernameTaken": "This username is already taken",
   "invalidCredentials": "Invalid username or password",
   "invalidUsername": "Use 3–32 Latin letters, digits, dots, underscores, or hyphens",
-  "invalidPassword": "Password must be between 8 and 200 characters",
+  "invalidPassword": "Password must be between 4 and 200 characters",
   "invalidSettings": "Invalid settings",
   "fileRequired": "Select a file",
   "invalidImageFile": "Select an image file",

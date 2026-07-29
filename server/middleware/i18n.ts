@@ -1,5 +1,6 @@
 import { createI18n } from 'vue-i18n'
 import locales from '../../locales'
+import { isLocaleCode } from '../../locales'
 import en from '../../locales/en.json'
 import ru from '../../locales/ru.json'
 
@@ -14,8 +15,9 @@ for (const locale of locales) {
 }
 
 export default defineEventHandler(e => {
-  e.context.$t = (key: string) =>
-    i18n.t(key, getCookie(e, 'lang') || i18n.fallbackLocale.toString())
+  const savedLocale = getCookie(e, 'lang')
+  const locale = isLocaleCode(savedLocale) ? savedLocale : 'en'
+  e.context.$t = (key: string) => i18n.t(key, {}, { locale })
 })
 
 declare module 'h3' {

@@ -1,3 +1,4 @@
+import { isLocaleCode } from '~/locales'
 import type { LocaleCode } from '~/locales'
 
 export default async () => {
@@ -10,11 +11,8 @@ export default async () => {
   })
 
   const browserLocale = getBrowserLocale()
-  await setLocale(
+  const selectedLocale =
     savedLang.value || (isLocaleCode(browserLocale) ? browserLocale : 'en')
-  )
-}
-
-function isLocaleCode(locale: string | null | undefined): locale is LocaleCode {
-  return locale === 'en' || locale === 'ru'
+  await setLocale(selectedLocale)
+  savedLang.value = selectedLocale
 }

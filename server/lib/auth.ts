@@ -204,7 +204,7 @@ function parseCredentials(event: H3Event, credentials: Credentials) {
       statusCode: 400,
       message: event.context.$t('invalidUsername'),
     })
-  if (password.length < 8 || password.length > 200)
+  if (password.length < 4 || password.length > 200)
     throw createError({
       statusCode: 400,
       message: event.context.$t('invalidPassword'),
